@@ -14,7 +14,6 @@ export class AuthService {
 	constructor(
 		@Inject(forwardRef(() => UsersService))
 		private usersService: UsersService,
-		private jwtService: JwtService,
 		private authEventEmitter: AuthEventEmitter,
 		private jwtTokenService: JwtService,
 	) {}
@@ -32,8 +31,8 @@ export class AuthService {
 			profile: {
 				username,
 				email,
-				password: hashedPassword,
 			},
+			hashedPassword: hashedPassword,
 			is_active: false,
 			created_at: new Date(),
 			activation_token: generateCodeToken(),
@@ -59,12 +58,12 @@ export class AuthService {
 		if (user === null) return null;
 
 		const isGoodPassword = await verifyPassword(
-			user.profile.password,
+			user.hashedPassword,
 			password,
 		);
 
 		if (user && isGoodPassword) {
-			const { password, ...result } = user.profile;
+			const { hashedPassword, ...result } = user;
 			return result;
 		}
 		return null;
@@ -81,7 +80,7 @@ export class AuthService {
 
 		if (userExists === null) throw new ServiceError('BAD_REQUEST', 'Error 400');
 
-		const passwordMatch = await verifyPassword(userExists.profile.password, password);
+		const passwordMatch = await verifyPassword(userExists.hashedPassword, password);
 		if (!passwordMatch) throw new ServiceError('BAD_REQUEST', 'Error 400');
 
 		const strategy = await this.getTokenStrategy(userExists._id);
@@ -143,11 +142,14 @@ export class AuthService {
 	}
 
 	async resetPassword(payload: DTOResetPassword) {
-		const { password, resetToken } = payload;
+		const { password, resetToken, confirmPassword } = payload;
 		await this.verifyResetToken({ resetToken });
 
+		if (password !== confirmPassword)
+			throw new ServiceError('BAD_REQUEST', 'Error 400');
+
 		const hashedPassword = await credentialsPassword(password);
-		const update = { $set: { "profile.password": hashedPassword } };
+		const update = { $set: { hashedPassword: hashedPassword } };
 		await this.usersService.findOneAndUpdateUser({ resetToken }, update);
 	}
 

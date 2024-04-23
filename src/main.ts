@@ -6,6 +6,7 @@ import { AppModule } from '@/app.module';
 import { config } from '@/config/config';
 import { corsOptionsDelegate } from './config/cors';
 import * as cookieParser from 'cookie-parser';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
 	const PORT = config.app.port
@@ -20,6 +21,14 @@ async function bootstrap() {
 			enableDebugMessages: true,
 		}),
 	);
+	const configSwagger = new DocumentBuilder()
+    .setTitle('Coacheta')
+    .setDescription('The Coacheta API')
+    .setVersion('1.0')
+    .addTag('Coacheta')
+    .build();
+	const document = SwaggerModule.createDocument(app, configSwagger);
+	SwaggerModule.setup('api', app, document);
 
 	app.use(cookieParser());
 

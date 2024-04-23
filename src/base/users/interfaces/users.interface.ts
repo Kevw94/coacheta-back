@@ -10,6 +10,7 @@ export enum Targets {
 export interface User {
 	_id?: ObjectId;
 	profile?: UserProfile;
+	hashedPassword?: string;
 	activation_token?: string;
 	resetToken?: string;
 	is_active?: boolean;
@@ -21,11 +22,9 @@ export interface UserProfile {
 	lastName?: string;
 	email?: string;
 	username?: string;
-	resume?: string;
 	phone?: string;
 	birthDate?: Date;
 	picture?: string;
-	password?: string;
 	size?: number;
 	weight?: number;
 	gender?: boolean;
