@@ -1,27 +1,29 @@
-import { Logger as NestLogger } from '@nestjs/common';
+import { Logger as NestLogger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 // Check environement onfiguration
 import '@/config/env.validator';
 import { AppModule } from '@/app.module';
 import { config } from '@/config/config';
+import { corsOptionsDelegate } from './config/cors';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
 	const PORT = config.app.port
     const app = await NestFactory.create(AppModule, {
 		bufferLogs: true,
 	});
-	// app.useGlobalPipes(
-	// 	new ValidationPipe({
-	// 		transform: true,
-	// 		disableErrorMessages: false,
-	// 		whitelist: true,
-	// 		enableDebugMessages: true,
-	// 	}),
-	// );
+	app.useGlobalPipes(
+		new ValidationPipe({
+			transform: true,
+			disableErrorMessages: false,
+			whitelist: true,
+			enableDebugMessages: true,
+		}),
+	);
 
-	// app.use(cookieParser());
+	app.use(cookieParser());
 
-	// app.enableCors(corsOptionsDelegate);
+	app.enableCors(corsOptionsDelegate);
 
 	await app.listen(PORT);
 
