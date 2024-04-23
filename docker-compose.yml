@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  mongo:
+    container_name: coacheta-local
+    restart: always
+    image: mongo
+    ports:
+      - 27090:27017
+    volumes:
+      - ./data:/data/db
