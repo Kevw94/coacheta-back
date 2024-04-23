@@ -49,13 +49,13 @@ export class UserProfileEntity {
 
 	@ApiProperty({
 		type: Number,
-		example: 65
+		example: 180
 	})
 	size?: number;
 
 	@ApiProperty({
 		type: Number,
-		example: 180
+		example: 65
 	})
 	weight?: number;
 

@@ -4,6 +4,7 @@ import { UsersRepository } from '@/base/users/users.repository';
 import { ProfileBodyDTO } from '@/base/users/dto/users.dto';
 import { flatten } from 'mongo-dot-notation';
 import { User } from './interfaces/users.interface';
+import { ServiceError } from '@/common/decorators/catch.decorator';
 
 @Injectable()
 export class UsersService {
@@ -14,6 +15,10 @@ export class UsersService {
 
 
 	async updateUserProfile(userId: ObjectId, body: ProfileBodyDTO) {
+		const { username } = body.profile
+		const userNameAlreadyExists = this.usersRepository.findOne({"profile.username": username})
+		if (userNameAlreadyExists !== null) throw new ServiceError('BAD_REQUEST', 'Error 400');
+
 		const update = flatten(body);
 		const query = { _id: userId };
 		await this.usersRepository.updateOneUser(query, update);
