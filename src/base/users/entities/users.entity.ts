@@ -66,7 +66,7 @@ export class UserProfileEntity {
 	gender?: boolean;
 
 	@ApiProperty({
-		type: Array<Enumerator>,
+		type: Array,
 		example: [0, 1]
 	})
 	targets?: Array<Targets>
