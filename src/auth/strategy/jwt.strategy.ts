@@ -4,6 +4,7 @@ import { Injectable, UnauthorizedException, Logger as NestLogger } from '@nestjs
 import { config } from '@/config/config';
 import { JwtPayload, JwtTokenData } from '../interfaces/jwt.interface';
 import { Request } from 'express';
+import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -31,7 +32,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 	}
 
 	async validate(payload: JwtPayload) {
-		// if (!payload?.id) throw new UnauthorizedException();
-		return { userId: payload.id, email: payload.email };
+		if (!payload?.id) throw new UnauthorizedException();
+		payload.id = new ObjectId(payload.id);
+		return payload;
 	}
 }
