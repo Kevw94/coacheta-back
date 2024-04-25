@@ -101,7 +101,7 @@ export class AuthService {
 
 	async activateAccount(payload: DTOActivationToken) {
 		const { activationToken } = payload;
-		const query = { activationToken: activationToken };
+		const query = { activation_token: activationToken };
 		const update: UpdateFilter<User> = {
 			$unset: { activation_token: 1 },
 			$set: { is_active: true },
