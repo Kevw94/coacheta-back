@@ -5,7 +5,9 @@ import { ObjectId } from 'mongodb';
 import { ProfileBodyDTO } from './dto/users.dto';
 import { UsersService } from './users.service';
 import { Response } from 'express';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Users')
 @Controller('users')
 export class UsersController {
 	constructor(private readonly usersService: UsersService) {}

@@ -15,6 +15,7 @@ import { FollowersModule } from './base/followers/followers.module';
 import { FollowedModule } from './base/followed/followed.module';
 import { ChatsModule } from './base/chats/chats.module';
 import { NotificationsModule } from './base/notifications/notifications.module';
+import { FitnessExercisesModule } from './base/fitness-exercises/fitness-exercises.module';
 
 @Module({
     imports: [
@@ -32,6 +33,7 @@ import { NotificationsModule } from './base/notifications/notifications.module';
 		FollowedModule,
 		ChatsModule,
 		NotificationsModule,
+		FitnessExercisesModule,
 	],
     controllers: [AppController],
     providers: [AppService],
