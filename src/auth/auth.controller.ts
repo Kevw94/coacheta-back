@@ -28,6 +28,7 @@ export class AuthController {
 	@ApiResponse({ status: 201, description: 'ok' })
 	@ApiBadRequestResponse({ description: 'BAD_REQUEST'})
 	async signIn(@Body() body: DTOAuthSignin, @Res() res: Response) {
+		console.log("signiiiiiin")
 		const { strategy } = await this.authService.signin(body);
 		res.setHeader('Set-Cookie', createAuthCookie(strategy));
 		return res.status(201).json({ status: 'ok' });
