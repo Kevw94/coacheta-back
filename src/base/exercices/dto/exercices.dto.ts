@@ -83,15 +83,6 @@ export class ExercicesDto {
 
     @ApiProperty({
         type: String,
-        example: 'Squat',
-    })
-    @IsNotEmpty()
-    @IsString({ message: 'Invalid type format' })
-    @Length(0, 100, { message: 'exercise name must be between 0 and 100 characters' })
-    name?: string;
-
-    @ApiProperty({
-        type: String,
         example: 'Jambes',
     })
     @IsOptional()
@@ -99,6 +90,18 @@ export class ExercicesDto {
     @IsNotEmpty()
     @Length(0, 100, { message: 'category must be between 0 and 100 characters' })
     category?: string;
+
+
+    @ApiProperty({
+        type: String,
+        example: 'Squat',
+    })
+    @IsNotEmpty()
+    @IsString({ message: 'Invalid type format' })
+    @Length(0, 100, { message: 'exercise name must be between 0 and 100 characters' })
+    name?: string;
+
+
 
     @IsObject()
     @IsOptional()

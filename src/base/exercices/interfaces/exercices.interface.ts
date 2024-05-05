@@ -9,7 +9,7 @@ export interface Serie {
     results: Result;
 }
 
-export interface Exercice {
+export interface Exercices {
     _id?: ObjectId;
     name?: string;
     category?: string;

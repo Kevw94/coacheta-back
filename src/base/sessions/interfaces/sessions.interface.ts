@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb';
-import { Exercice } from '@/base/exercices/interfaces/exercices.interface';
+import { Exercices } from '@/base/exercices/interfaces/exercices.interface';
 
 export interface Target {
     weight: number;
@@ -30,6 +30,6 @@ export interface Session {
     _id?: ObjectId;
     creator_id?: ObjectId;
     history?: Date[];
-    exercises?: Exercice;
+    exercises?: Exercices[];
     resume?: Resume;
 }

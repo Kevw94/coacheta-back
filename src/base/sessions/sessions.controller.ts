@@ -1,4 +1,4 @@
-import { Body, Controller, forwardRef, Inject, Post, Res } from '@nestjs/common';
+import { Body, Controller, Post, Res } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Response } from 'express';
 import { SessionsService } from '@/base/sessions/sessions.service';
@@ -15,11 +15,9 @@ export class SessionsController {
     @ApiOperation({ summary: 'create a session' })
     @ApiResponse({ status: 201, description: 'ok' })
     @ApiBadRequestResponse({ description: 'BAD_REQUEST' })
-    async createSession(@Body() body: any, @Res() res: Response) { // SessionsDto
+    async createSession(@Body() body: SessionsDto, @Res() res: Response) {
         body.creator_id = new ObjectId(body.creator_id);
         await this.sessionsService.createNewSession(body);
-        console.log(body);
-        //res.setHeader('Set-Cookie', createAuthCookie(strategy));
         return res.status(201).json({ status: 'ok' });
     }
 }

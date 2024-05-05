@@ -1,11 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-    IsArray,
-    IsMongoId,
-    IsNotEmpty,
-    IsObject,
-    IsOptional,
-} from 'class-validator';
+import { IsArray, IsMongoId, IsNotEmpty, IsObject, IsOptional, IsString } from 'class-validator';
 import { ObjectId } from 'mongodb';
 import { Type } from 'class-transformer';
 import { ExercicesDto } from '@/base/exercices/dto/exercices.dto';
@@ -37,11 +31,11 @@ class Resume {
 export class SessionsDto {
     @ApiProperty({
         type: ObjectId,
-        //example: "0654345442"
+        //example: "662b5612e742abc24928c348"
     })
     @IsMongoId()
-    @IsOptional()
-    creator_id: ObjectId;
+    @IsNotEmpty()
+    public creator_id: ObjectId;
 
     @ApiProperty({
         type: Array,
@@ -49,17 +43,17 @@ export class SessionsDto {
     })
     @IsOptional()
     @IsArray({ message: 'Invalid type format' })
-    history: Date[];
+    public history: Date[];
 
-    @IsObject()
+    @IsArray()
     @IsNotEmpty()
     // 	@ValidateNested({ message: 'Invalid exercises' })
     @Type(() => ExercicesDto)
-    exercises: ExercicesDto[];
+    public exercises: ExercicesDto[];
 
     @IsObject()
     @IsOptional()
     // 	@ValidateNested({ message: 'Invalid resume' })
     @Type(() => Resume)
-    resume: Resume;
+    public resume: Resume;
 }
