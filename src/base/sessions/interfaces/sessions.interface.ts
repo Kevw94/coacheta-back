@@ -28,6 +28,7 @@ export interface Resume {
 
 export interface Session {
     _id?: ObjectId;
+    name?: string;
     creator_id?: ObjectId;
     history?: Date[];
     exercises?: Exercices[];

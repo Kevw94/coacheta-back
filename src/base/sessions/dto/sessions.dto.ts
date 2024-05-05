@@ -4,13 +4,7 @@ import { ObjectId } from 'mongodb';
 import { Type } from 'class-transformer';
 import { ExercicesDto } from '@/base/exercices/dto/exercices.dto';
 import { Serie } from '@/base/sessions/interfaces/sessions.interface';
-/*
-   _id?: ObjectId;
-    creator_id?: ObjectId;
-    history?: Date[];
-    exercises?: Exercice;
-    resume?: Resume;
- */
+
 
 class Resume {
     @ApiProperty({
@@ -36,6 +30,14 @@ export class SessionsDto {
     @IsMongoId()
     @IsNotEmpty()
     public creator_id: ObjectId;
+
+    @ApiProperty({
+        type: String,
+        //example: "662b5612e742abc24928c348"
+    })
+    @IsString()
+    @IsNotEmpty()
+    public name?: string;
 
     @ApiProperty({
         type: Array,
