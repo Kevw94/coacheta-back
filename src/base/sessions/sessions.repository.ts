@@ -9,7 +9,7 @@ export class SessionsRepository {
         return this.db.collection<Session>('sessions');
     }
 
-    async createSession(query: Session) {
+    async createSession(query: any) {
         return this.sessions.insertOne(query);
     }
 

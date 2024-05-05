@@ -9,8 +9,7 @@ export class SessionsService {
         private sessionsRepository: SessionsRepository,
     ) {}
 
-    createNewSession(session) {
+    createNewSession(session: any) {
         return this.sessionsRepository.createSession(session);
-
     }
 }
