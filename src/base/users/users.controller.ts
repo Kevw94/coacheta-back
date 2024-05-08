@@ -19,6 +19,13 @@ export class UsersController {
         @Body() body: ProfileBodyDTO,
         @Res() res: Response,
     ) {
+        console.log('Received body:', body); // Vérifiez le contenu du corps de la requête
+
+        // Assurez-vous que 'body' contient les données attendues
+        if (!body || !body.profile.email || !body.profile.username) {
+            return res.status(400).json({ error: 'Invalid request body' });
+        }
+
         await this.usersService.updateUserProfile(userId, body);
         return res.status(200).json({ status: 'ok' });
     }

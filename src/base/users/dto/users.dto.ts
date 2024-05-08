@@ -1,4 +1,10 @@
-import { EMAIL_FORMAT, STRICT_API_URL } from '@/common/constants/global';
+import {
+    EMAIL_FORMAT,
+    STRICT_API_URL,
+    STRICT_GITHUB_URL,
+    STRICT_LINKEDIN_URL,
+    STRICT_URL,
+} from '@/common/constants/global';
 import { IsValidDatePeriod } from '@/common/validators/IsValidDatePeriod.validator';
 import { IsValidStringLength } from '@/common/validators/IsValidStringLength.validator';
 import { ApiProperty } from '@nestjs/swagger';
@@ -6,6 +12,7 @@ import { Type } from 'class-transformer';
 import {
     IsArray,
     IsBoolean,
+	IsEmail,
     IsInt,
     IsNotEmpty,
     IsNumber,
@@ -71,6 +78,7 @@ class UserProfileDTO {
     })
     @IsNotEmpty()
     @IsString()
+    @IsEmail()
     @Length(8, 127)
     @Matches(EMAIL_FORMAT, { message: 'Invalid email' })
     public email: string;
