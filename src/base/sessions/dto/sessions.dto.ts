@@ -1,26 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsMongoId, IsNotEmpty, IsObject, IsOptional, IsString } from 'class-validator';
+import {
+    IsArray,
+    IsBoolean,
+    IsDate,
+    IsMongoId,
+    IsNotEmpty,
+    IsOptional,
+    IsString,
+} from 'class-validator';
 import { ObjectId } from 'mongodb';
-import { Type } from 'class-transformer';
-import { ExercicesDto } from '@/base/exercices/dto/exercices.dto';
-import { Serie } from '@/base/sessions/interfaces/sessions.interface';
-
-
-class Resume {
-    @ApiProperty({
-        type: Array,
-        //example: "0654345442"
-    })
-    @IsArray()
-    series?: Serie[];
-
-    @ApiProperty({
-        type: Array,
-        //example: "0654345442"
-    })
-    @IsArray()
-    participants_id?: ObjectId[];
-}
+import { forwardRef, Inject } from '@nestjs/common';
 
 export class SessionsDto {
     @ApiProperty({
@@ -37,7 +26,10 @@ export class SessionsDto {
     })
     @IsString()
     @IsNotEmpty()
-    public name?: string;
+    public name: string;
+
+    @IsOptional()
+    public schedule: ScheduledDate[];
 
     @ApiProperty({
         type: Array,
@@ -50,12 +42,39 @@ export class SessionsDto {
     @IsArray()
     @IsNotEmpty()
     // 	@ValidateNested({ message: 'Invalid exercises' })
-    @Type(() => ExercicesDto)
-    public exercises: ExercicesDto[];
+    public exercises_id: ObjectId[];
 
-    @IsObject()
+    @IsArray()
     @IsOptional()
-    // 	@ValidateNested({ message: 'Invalid resume' })
-    @Type(() => Resume)
-    public resume: Resume;
+    // 	@ValidateNested({ message: 'Invalid exercises' })
+    public sets_id: ObjectId[];
+
+    @IsArray()
+    @IsOptional()
+    @Inject(forwardRef(() => Participant))
+    // 	@ValidateNested({ message: 'Invalid exercises' })
+    public participants_id: Participant[];
+
+    @IsOptional()
+    coverImageUri: any;
+}
+
+export class ScheduledDate {
+    @IsDate()
+    @IsNotEmpty()
+    public date: Date;
+
+    @IsBoolean()
+    @IsNotEmpty()
+    public isDone: boolean;
+}
+
+export class Participant {
+    @IsArray()
+    @IsNotEmpty()
+    public participants_id: ObjectId[];
+
+    @IsBoolean()
+    @IsString()
+    public status: 'invited' | 'confirmed';
 }

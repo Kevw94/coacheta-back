@@ -1,7 +1,6 @@
-import {forwardRef, Inject, Injectable} from '@nestjs/common';
-import {SessionsRepository} from "@/base/sessions/sessions.repository";
-import {Session} from "@/base/sessions/interfaces/sessions.interface";
-import {SessionsDto} from "@/base/sessions/dto/sessions.dto";
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { SessionsRepository } from '@/base/sessions/sessions.repository';
+import { SessionsDto } from '@/base/sessions/dto/sessions.dto';
 
 @Injectable()
 export class SessionsService {
