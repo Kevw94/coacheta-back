@@ -1,5 +1,5 @@
 import { Jwt } from '@/common/decorators/jwt.decorator';
-import { Body, Controller, Patch, Res, UseGuards } from '@nestjs/common';
+import {Body, Controller, Patch, Res, UseGuards} from '@nestjs/common';
 import { JwtAuthGuard } from '@/common/guards/auth.guard';
 import { ObjectId } from 'mongodb';
 import { ProfileBodyDTO } from './dto/users.dto';
@@ -19,14 +19,15 @@ export class UsersController {
         @Body() body: ProfileBodyDTO,
         @Res() res: Response,
     ) {
-        console.log('Received body:', body); // Vérifiez le contenu du corps de la requête
+        console.log('Received body:', body);
 
-        // Assurez-vous que 'body' contient les données attendues
-        if (!body || !body.profile.email || !body.profile.username) {
-            return res.status(400).json({ error: 'Invalid request body' });
+        try {
+            await this.usersService.updateUserProfile(userId, body);
+
+            return res.status(200).json({ status: 'ok' });
+        } catch (error) {
+            console.error('Failed to update profile:', error);
+            return res.status(500).json({ error: 'Internal Server Error' });
         }
-
-        await this.usersService.updateUserProfile(userId, body);
-        return res.status(200).json({ status: 'ok' });
     }
 }

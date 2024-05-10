@@ -15,15 +15,14 @@ export class UsersService {
 
     async updateUserProfile(userId: ObjectId, body: ProfileBodyDTO): Promise<void> {
         try {
-            if (!body || !Object.keys(body).length) {
-                throw new Error('ProfileBodyDTO is empty or undefined');
+            console.log('body:', body);
+            if (!body.profile || !body.profile.email || !body.profile.username) {
+                throw new Error('Invalid or empty profile data');
             }
 
             const update = flatten(body);
             const query = { _id: userId };
-            const result = await this.usersRepository.updateOneUser(query, {
-                $set: { profile: update },
-            });
+            const result = await this.usersRepository.updateOneUser(query, update);
 
             if (result.modifiedCount === 0) {
                 throw new Error('User profile not updated');

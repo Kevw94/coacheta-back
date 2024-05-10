@@ -12,7 +12,7 @@ import { Type } from 'class-transformer';
 import {
     IsArray,
     IsBoolean,
-	IsEmail,
+    IsEmail,
     IsInt,
     IsNotEmpty,
     IsNumber,
@@ -121,6 +121,7 @@ class UserProfileDTO {
         type: Array,
         example: [0, 1],
     })
+    @IsOptional()
     @IsArray()
     targets?: [];
 }
