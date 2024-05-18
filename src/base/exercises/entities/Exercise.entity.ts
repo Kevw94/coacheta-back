@@ -1,7 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-
 export class ExerciseEntity {
 	@ApiProperty({
 		type: ObjectId,

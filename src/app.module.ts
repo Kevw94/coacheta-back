@@ -32,7 +32,6 @@ import { NotificationsModule } from './base/notifications/notifications.module';
 		FollowedModule,
 		ChatsModule,
 		NotificationsModule,
-		ExercisesModule,
 	],
     controllers: [AppController],
     providers: [AppService],

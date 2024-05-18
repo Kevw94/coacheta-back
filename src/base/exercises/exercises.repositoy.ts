@@ -6,18 +6,18 @@ import { Exercise } from './interfaces/exercises.interface';
 export class ExercisesRepository {
 	constructor(@Inject('DATABASE_CONNECTION') private db: Db) {}
 
-	get Exercises() {
+	get exercises() {
 		return this.db.collection<Exercise>('exercises');
 	}
 
 	async findOne(query: Filter<Exercise>, options: FindOptions<Exercise> = undefined) {
-		return this.Exercises.findOne(query, options);
+		return this.exercises.findOne(query, options);
 	}
 
 	async findMany(query: Filter<Exercise>, options: FindOptions<Exercise> = undefined) {
-		return this.Exercises.find(query, options).toArray();
+		return this.exercises.find(query, options).toArray();
 	}
 	async getAllFitnessExercises() {
-		return this.Exercises.find().toArray();
+		return this.exercises.find().toArray();
 	}
 }
