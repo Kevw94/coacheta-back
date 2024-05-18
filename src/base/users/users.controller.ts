@@ -10,17 +10,16 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
-	constructor(private readonly usersService: UsersService) {}
+    constructor(private readonly usersService: UsersService) {}
 
-	@Patch('profile')
-	@UseGuards(JwtAuthGuard)
-	async patchUserProfile(
-		@Jwt() userId: ObjectId,
-		@Body() body: ProfileBodyDTO,
-		@Res() res: Response,
-	) {
-		await this.usersService.updateUserProfile(userId, body);
-		return res.status(200).json({ status: 'ok' });
-	}
-
+    @Patch('profile')
+    @UseGuards(JwtAuthGuard)
+    async patchUserProfile(
+        @Jwt() userId: ObjectId,
+        @Body() body: ProfileBodyDTO,
+        @Res() res: Response,
+    ) {
+        await this.usersService.updateUserProfile(userId, body);
+        return res.status(200).json({ status: 'ok' });
+    }
 }
