@@ -3,7 +3,6 @@ import { ApiBadRequestResponse, ApiOperation, ApiResponse } from '@nestjs/swagge
 import { Response } from 'express';
 import { SessionsService } from '@/base/sessions/sessions.service';
 import { SessionsDto } from '@/base/sessions/dto/sessions.dto';
-import { ObjectId } from 'mongodb';
 
 @Controller('sessions')
 export class SessionsController {
@@ -16,7 +15,7 @@ export class SessionsController {
     @ApiResponse({ status: 201, description: 'ok' })
     @ApiBadRequestResponse({ description: 'BAD_REQUEST' })
     async createSession(@Body() body: SessionsDto, @Res() res: Response) {
-        body.creator_id = new ObjectId(body.creator_id);
+        console.log(body);
         await this.sessionsService.createNewSession(body);
         return res.status(201).json({ status: 'ok' });
     }

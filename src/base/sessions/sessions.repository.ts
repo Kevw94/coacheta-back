@@ -13,7 +13,10 @@ export class SessionsRepository {
         return this.sessions.insertOne(query);
     }
 
-    async updateOneSession(query: Filter<Session>, update: Partial<Session> | UpdateFilter<Session>) {
+    async updateOneSession(
+        query: Filter<Session>,
+        update: Partial<Session> | UpdateFilter<Session>,
+    ) {
         return this.sessions.updateOne(query, update);
     }
 
