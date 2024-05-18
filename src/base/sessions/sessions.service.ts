@@ -11,12 +11,11 @@ export class SessionsService {
     ) {}
 
     createNewSession(session: SessionsDto) {
-		const { creator_id,  exercises_id  } = session
-		const objectIdExercises = exercises_id.map(id => new ObjectId(id));
+		const { creator_id } = session
+
 		const newSession = {
 			...session,
-			creator_id: new ObjectId(creator_id),
-			exercises_id: objectIdExercises,
+			creator_id: new ObjectId(creator_id)
 		}
 		console.log(newSession);
 
