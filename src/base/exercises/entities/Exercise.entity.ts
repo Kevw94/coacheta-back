@@ -1,12 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-
-<<<<<<<< HEAD:src/base/exercises/entities/Exercise.entity.ts
 export class ExerciseEntity {
-========
-export class ExerciceEntity {
->>>>>>>> 629b2ba (Implement exercises):src/base/exercices/entities/exercice.entity.ts
 	@ApiProperty({
 		type: ObjectId,
 		example: "ObjectId('66267514b4cf851b4df7fadb')"
