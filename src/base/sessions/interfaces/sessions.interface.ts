@@ -1,10 +1,10 @@
-import {ObjectId} from "mongodb";
+import { ObjectId } from 'mongodb';
 
 export interface Session {
-    _id: ObjectId;
+    _id?: ObjectId;
     creator_id: ObjectId;
     name: string;
-    description: string;
-    exercices_id: ObjectId[];
-    coverImageUri: any;
+    description?: string;
+    exercises_id: ObjectId[];
+    coverImageUri?: string;
 }

@@ -23,8 +23,8 @@ export class Sessions {
     })
     exercices_id: ObjectId[];
 
-    /*@ApiProperty({
-        type: ??,
+    @ApiProperty({
+        type: String,
     })
-    coverImageUri: any;*/
+    coverImageUri: string;
 }

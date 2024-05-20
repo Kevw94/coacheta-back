@@ -33,5 +33,5 @@ export class SessionsDto {
     public exercises_id: ObjectId[];
 
     @IsOptional()
-    coverImageUri: any;
+    public coverImageUri: string;
 }
