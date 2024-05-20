@@ -1,6 +1,6 @@
 import {ObjectId} from "mongodb";
 
-export interface Sessions {
+export interface Session {
     _id: ObjectId;
     creator_id: ObjectId;
     name: string;
