@@ -1,10 +1,4 @@
-import {
-    EMAIL_FORMAT,
-    STRICT_API_URL,
-    STRICT_GITHUB_URL,
-    STRICT_LINKEDIN_URL,
-    STRICT_URL,
-} from '@/common/constants/global';
+import { EMAIL_FORMAT, STRICT_API_URL } from '@/common/constants/global';
 import { IsValidDatePeriod } from '@/common/validators/IsValidDatePeriod.validator';
 import { IsValidStringLength } from '@/common/validators/IsValidStringLength.validator';
 import { ApiProperty } from '@nestjs/swagger';
@@ -126,11 +120,11 @@ class UserProfileDTO {
     targets?: [];
 }
 
-export class ProfileBodyDTO {
+export class UpdateProfileDTO {
     @IsOptional()
     @ValidateNested({ message: 'Invalid user profile' })
-    @IsNotEmpty()
-    @IsObject()
+    @IsNotEmpty({ message: 'Profile should not be empty when provided' })
+    @IsObject({ message: 'Profile must be an object' })
     @Type(() => UserProfileDTO)
-    profile: UserProfileDTO;
+    profile?: UserProfileDTO;
 }

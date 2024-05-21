@@ -1,10 +1,9 @@
 import { Filter, FindOneAndUpdateOptions, FindOptions, ObjectId, UpdateFilter } from 'mongodb';
-import { Inject, Injectable, forwardRef, Logger as NestLogger } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { UsersRepository } from '@/base/users/users.repository';
-import { ProfileBodyDTO } from '@/base/users/dto/users.dto';
+import { UpdateProfileDTO } from '@/base/users/dto/users.dto';
 import { flatten } from 'mongo-dot-notation';
 import { User } from './interfaces/users.interface';
-import { ServiceError } from '@/common/decorators/catch.decorator';
 
 @Injectable()
 export class UsersService {
@@ -12,25 +11,6 @@ export class UsersService {
         @Inject(forwardRef(() => UsersRepository))
         private usersRepository: UsersRepository,
     ) {}
-
-    async updateUserProfile(userId: ObjectId, body: ProfileBodyDTO): Promise<void> {
-        try {
-            console.log('body:', body);
-            if (!body.profile || !body.profile.email || !body.profile.username) {
-                throw new Error('Invalid or empty profile data');
-            }
-
-            const update = flatten(body);
-            const query = { _id: userId };
-            const result = await this.usersRepository.updateOneUser(query, update);
-
-            if (result.modifiedCount === 0) {
-                throw new Error('User profile not updated');
-            }
-        } catch (error) {
-            throw new Error(`Failed to update user profile: ${error.message}`);
-        }
-    }
 
     async tryRegisterUser(user: User) {
         return this.usersRepository.createUser(user);
@@ -74,11 +54,11 @@ export class UsersService {
         );
     }
 
-    // async updateUserProfile(userId: string, body: UpdateUserProfileDTO) {
-    // 	const update = flatten(body);
-    // 	const query = { _id: new ObjectId(userId) };
-    // 	await this.usersRepository.updateOneUser(query, update);
-    // }
+    async updateUserProfile(userId: ObjectId, body: any) {
+        const update = flatten(body);
+        const query = { _id: new ObjectId(userId) };
+        await this.usersRepository.updateOneUser(query, update);
+    }
 
     async searchUser(search: string) {
         const query = {
