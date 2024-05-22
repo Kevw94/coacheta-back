@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 
-export interface FitnessExercise {
+export interface Exercise {
 	_id: ObjectId
 	bodyPart: BodyPart
 	equipment: Equipment

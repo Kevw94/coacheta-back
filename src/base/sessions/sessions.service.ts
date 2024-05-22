@@ -1,7 +1,7 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { SessionsRepository } from '@/base/sessions/sessions.repository';
 import { SessionsDto } from '@/base/sessions/dto/sessions.dto';
-import {ObjectId} from "mongodb";
+import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class SessionsService {
@@ -11,7 +11,15 @@ export class SessionsService {
     ) {}
 
     createNewSession(session: SessionsDto) {
-        return this.sessionsRepository.createSession(session);
+        const { creator_id } = session;
+
+        const newSession = {
+            ...session,
+            creator_id: new ObjectId(creator_id),
+        };
+        console.log(newSession);
+
+        return this.sessionsRepository.createSession(newSession);
     }
 
     getMySessions(user_id: ObjectId) {

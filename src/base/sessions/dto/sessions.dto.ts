@@ -1,15 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { ObjectId } from 'mongodb';
+import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class SessionsDto {
     @ApiProperty({
-        type: ObjectId,
+        type: String,
         //example: "662b5612e742abc24928c348"
     })
-    @IsMongoId()
+    @IsString()
     @IsNotEmpty()
-    public creator_id: ObjectId;
+    public creator_id: string;
 
     @ApiProperty({
         type: String,
@@ -19,19 +18,15 @@ export class SessionsDto {
     @IsNotEmpty()
     public name: string;
 
-    @ApiProperty({
-        type: String,
-        //example: "662b5612e742abc24928c348"
-    })
     @IsString()
-    @IsNotEmpty()
+    @IsOptional()
     public description: string;
 
     @IsArray()
     @IsNotEmpty()
     // 	@ValidateNested({ message: 'Invalid exercises' })
-    public exercises_id: ObjectId[];
+    public exercises_id: string[];
 
     @IsOptional()
-    public coverImageUri: string;
+    coverImageUri: any;
 }

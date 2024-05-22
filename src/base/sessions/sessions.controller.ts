@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { Response } from 'express';
-import { SessionsService } from '@/base/sessions/sessions.service';
+import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
 import { ObjectId } from 'mongodb';
 import { Jwt } from '@/common/decorators/jwt.decorator';
 import { JwtAuthGuard } from '@/common/guards/auth.guard';
+import { ApiBadRequestResponse, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { Response } from 'express';
+import { SessionsService } from '@/base/sessions/sessions.service';
+import { SessionsDto } from '@/base/sessions/dto/sessions.dto';
 
 @Controller('sessions')
 export class SessionsController {
@@ -16,19 +17,12 @@ export class SessionsController {
     @ApiOperation({ summary: 'create a session' })
     @ApiResponse({ status: 201, description: 'ok' })
     @ApiBadRequestResponse({ description: 'BAD_REQUEST' })
-    async createSession(@Res() res: Response) {
-        // @Body() body: SessionsDto,
-
-        /*   await this.sessionsService.createNewSession({
-            creator_id: new ObjectId('6629786312ccdffe8421f7ae'),
-            name: 'Ma séance 3',
-            description: 'aaaa ccccccc aaaaab',
-            exercises_id: [new ObjectId("662b5612e742abc24928c38f"), new ObjectId("662b5612e742abc24928c390"), new ObjectId("662b5612e742abc24928c391"), new ObjectId("662b5612e742abc24928c393")],
-            coverImageUri: 'https://picsum.photos/200/300',
-        });
-        */
+    async createSession(@Body() body: SessionsDto, @Res() res: Response) {
+        console.log(body);
+        await this.sessionsService.createNewSession(body);
         return res.status(201).json({ status: 'ok' });
     }
+
 
     @Get('')
     @ApiOperation({ summary: 'get my sessions' })
@@ -37,6 +31,6 @@ export class SessionsController {
     @UseGuards(JwtAuthGuard)
     async getMySessions(@Jwt() userId: ObjectId, @Res() res: Response) {
         const mySessions = await this.sessionsService.getMySessions(userId);
-        return res.status(201).json({ status: 'ok' });
+        return res.status(201).json({ sessions: mySessions, status: 'ok' });
     }
 }

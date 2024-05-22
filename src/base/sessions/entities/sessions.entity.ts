@@ -1,7 +1,7 @@
-import {ObjectId} from "mongodb";
-import {ApiProperty} from "@nestjs/swagger";
+import { ObjectId } from 'mongodb';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class Sessions {
+export class SessionEntity {
     @ApiProperty({
         type: ObjectId,
     })
@@ -9,22 +9,24 @@ export class Sessions {
 
     @ApiProperty({
         type: String,
+        example: 'Grosse séance pecs',
     })
     name: string;
 
     @ApiProperty({
         type: String,
+        example: 'séeance de porc pour se détruire le chest tu connais',
     })
-    description: string;
-
+    desc: string;
 
     @ApiProperty({
-        type: Array,
+        type: Array<string>,
     })
-    exercices_id: ObjectId[];
+    exercises_id: Array<string>;
 
     @ApiProperty({
         type: String,
+        example: 'image.jpeg',
     })
-    coverImageUri: string;
+    coverImageUri?: string;
 }

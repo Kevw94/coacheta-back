@@ -5,6 +5,6 @@ export interface Session {
     creator_id: ObjectId;
     name: string;
     description?: string;
-    exercises_id: ObjectId[];
+    exercises_id: String[];
     coverImageUri?: string;
 }

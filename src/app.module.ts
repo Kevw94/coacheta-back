@@ -8,14 +8,14 @@ import { MailjetModule } from './external-modules/mailjet/mailjet.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { SessionsModule } from './base/sessions/sessions.module';
 import { ProgramsModule } from './base/programs/programs.module';
-import { ExercicesModule } from './base/exercices/exercices.module';
+import { ExercisesModule } from './base/exercises/exercises.module';
 import { SeriesModule } from './base/series/series.module';
 import { CalendarsModule } from './base/calendars/calendars.module';
 import { FollowersModule } from './base/followers/followers.module';
 import { FollowedModule } from './base/followed/followed.module';
 import { ChatsModule } from './base/chats/chats.module';
 import { NotificationsModule } from './base/notifications/notifications.module';
-import { FitnessExercisesModule } from './base/fitness-exercises/fitness-exercises.module';
+import { TrainingsModule } from './trainings/trainings.module';
 
 @Module({
     imports: [
@@ -26,14 +26,14 @@ import { FitnessExercisesModule } from './base/fitness-exercises/fitness-exercis
 		EventEmitterModule.forRoot(),
 		SessionsModule,
 		ProgramsModule,
-		ExercicesModule,
+		ExercisesModule,
 		SeriesModule,
 		CalendarsModule,
 		FollowersModule,
 		FollowedModule,
 		ChatsModule,
 		NotificationsModule,
-		FitnessExercisesModule,
+		TrainingsModule,
 	],
     controllers: [AppController],
     providers: [AppService],

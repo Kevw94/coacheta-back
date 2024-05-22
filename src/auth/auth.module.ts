@@ -12,22 +12,16 @@ import { JwtStrategy } from './strategy/jwt.strategy';
 import { MailjetListeners } from '@/common/providers/mailjet.provider';
 
 @Module({
-	imports: [
-		DatabaseModule,
-		MailjetModule,
-		forwardRef(() => UsersModule),
-		JwtModule.register({
-			secret: config.jwt.secret,
-			signOptions: { expiresIn: '30d' },
-		}),
-	],
-	controllers: [AuthController],
-	providers: [
-		AuthService,
-		AuthEventEmitter,
-		LocalStrategy,
-		JwtStrategy,
-		MailjetListeners,
-	]
+    imports: [
+        DatabaseModule,
+        MailjetModule,
+        forwardRef(() => UsersModule),
+        JwtModule.register({
+            secret: config.jwt.secret,
+            signOptions: { expiresIn: '30d' },
+        }),
+    ],
+    controllers: [AuthController],
+    providers: [AuthService, AuthEventEmitter, LocalStrategy, JwtStrategy, MailjetListeners],
 })
-export class AuthModule { }
+export class AuthModule {}
