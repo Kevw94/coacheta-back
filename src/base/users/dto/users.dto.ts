@@ -70,20 +70,22 @@ class UserProfileDTO {
     @ApiProperty({
         example: 'lovex@gmail.com',
     })
+    @IsOptional()
     @IsNotEmpty()
     @IsString()
     @IsEmail()
     @Length(8, 127)
     @Matches(EMAIL_FORMAT, { message: 'Invalid email' })
-    public email: string;
+    public email?: string;
 
     @ApiProperty({
         example: 'kevw94',
     })
+    @IsOptional()
     @IsNotEmpty()
     @IsString()
     @Length(2, 50)
-    public username: string;
+    public username?: string;
 
     @ApiProperty({
         type: Number,
@@ -126,5 +128,5 @@ export class UpdateProfileDTO {
     @IsNotEmpty({ message: 'Profile should not be empty when provided' })
     @IsObject({ message: 'Profile must be an object' })
     @Type(() => UserProfileDTO)
-    profile?: UserProfileDTO;
+    profile: UserProfileDTO;
 }

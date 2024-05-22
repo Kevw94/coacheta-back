@@ -6,6 +6,7 @@ import { ObjectId } from 'mongodb';
 import { UsersService } from './users.service';
 import { Response } from 'express';
 import { ApiTags } from '@nestjs/swagger';
+import { UpdateProfileDTO } from './dto/users.dto';
 
 @ApiTags('Users')
 @Controller('users')
@@ -14,7 +15,11 @@ export class UsersController {
 
     @Patch('profile')
     @UseGuards(JwtAuthGuard)
-    async patchUserProfile(@Jwt() userId: ObjectId, @Body() body: any, @Res() res: Response) {
+    async patchUserProfile(
+        @Jwt() userId: ObjectId,
+        @Body() body: UpdateProfileDTO,
+        @Res() res: Response,
+    ) {
         console.log('controller body: ', body);
         await this.usersService.updateUserProfile(userId, body);
         return res.status(200).json({ status: 'ok' });
