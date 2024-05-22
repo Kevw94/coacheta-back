@@ -16,14 +16,7 @@ export class UsersController {
     @UseGuards(JwtAuthGuard)
     async patchUserProfile(@Jwt() userId: ObjectId, @Body() body: any, @Res() res: Response) {
         console.log('controller body: ', body);
-        try {
-            console.log('body transmitted to service: ', userId, body);
-            await this.usersService.updateUserProfile(userId, body);
-
-            return res.status(200).json({ status: 'ok' });
-        } catch (error) {
-            console.error('Failed to update profile:', error);
-            return res.status(500).json({ error: 'Internal Server Error' });
-        }
+        await this.usersService.updateUserProfile(userId, body);
+        return res.status(200).json({ status: 'ok' });
     }
 }
