@@ -17,7 +17,7 @@ export class SessionEntity {
         type: String,
         example: 'séeance de porc pour se détruire le chest tu connais',
     })
-    desc: string;
+    description: string;
 
     @ApiProperty({
         type: Array<string>,
