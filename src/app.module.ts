@@ -9,7 +9,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { SessionsModule } from './base/sessions/sessions.module';
 import { ProgramsModule } from './base/programs/programs.module';
 import { ExercisesModule } from './base/exercises/exercises.module';
-import { SeriesModule } from './base/series/series.module';
+import { SetsModule } from './base/sets/sets.module';
 import { CalendarsModule } from './base/calendars/calendars.module';
 import { FollowersModule } from './base/followers/followers.module';
 import { FollowedModule } from './base/followed/followed.module';
@@ -27,7 +27,7 @@ import { TrainingsModule } from './trainings/trainings.module';
 		SessionsModule,
 		ProgramsModule,
 		ExercisesModule,
-		SeriesModule,
+		SetsModule,
 		CalendarsModule,
 		FollowersModule,
 		FollowedModule,
