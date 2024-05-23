@@ -21,4 +21,9 @@ export class SessionsService {
 
         return this.sessionsRepository.createSession(newSession);
     }
+
+	async getSessions(userId: ObjectId) {
+		const sessions = await this.sessionsRepository.findMany({creator_id: userId})
+		return sessions
+	}
 }
