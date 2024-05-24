@@ -6,7 +6,6 @@ export enum Targets {
 	PPRISE_DE_FORCE = 2,
 }
 
-
 export interface User {
 	_id?: ObjectId;
 	profile?: UserProfile;
@@ -28,7 +27,5 @@ export interface UserProfile {
 	size?: number;
 	weight?: number;
 	gender?: boolean;
-	targets?: Array<Targets>
+	targets?: Array<Targets>;
 }
-
-

@@ -7,6 +7,6 @@ import { ExercisesRepository } from './exercises.repositoy';
 @Module({
 	imports: [DatabaseModule],
 	controllers: [ExercisesController],
-	providers: [ExercisesService, ExercisesRepository]
+	providers: [ExercisesService, ExercisesRepository],
 })
-export class ExercisesModule { }
+export class ExercisesModule {}

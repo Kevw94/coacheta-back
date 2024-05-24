@@ -5,19 +5,19 @@ import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class SessionsService {
-    constructor(
-        @Inject(forwardRef(() => SessionsRepository))
-        private sessionsRepository: SessionsRepository,
-    ) {}
+	constructor(
+		@Inject(forwardRef(() => SessionsRepository))
+		private sessionsRepository: SessionsRepository,
+	) {}
 
     createNewSession(session: SessionsDto) {
-		const { creator_id } = session
+        const { creator_id } = session;
 
-		const newSession = {
-			...session,
-			creator_id: new ObjectId(creator_id)
-		}
-		console.log(newSession);
+        const newSession = {
+            ...session,
+            creator_id: new ObjectId(creator_id),
+        };
+        console.log(newSession);
 
         return this.sessionsRepository.createSession(newSession);
     }

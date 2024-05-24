@@ -11,17 +11,16 @@ import { UpdateProfileDTO } from './dto/users.dto';
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
-    constructor(private readonly usersService: UsersService) {}
+	constructor(private readonly usersService: UsersService) {}
 
-    @Patch('profile')
-    @UseGuards(JwtAuthGuard)
-    async patchUserProfile(
-        @Jwt() userId: ObjectId,
-        @Body() body: UpdateProfileDTO,
-        @Res() res: Response,
-    ) {
-        console.log('controller body: ', body);
-        await this.usersService.updateUserProfile(userId, body);
-        return res.status(200).json({ status: 'ok' });
-    }
+	@Patch('profile')
+	@UseGuards(JwtAuthGuard)
+	async patchUserProfile(
+		@Jwt() userId: ObjectId,
+		@Body() body: UpdateProfileDTO,
+		@Res() res: Response,
+	) {
+		await this.usersService.updateUserProfile(userId, body);
+		return res.status(200).json({ status: 'ok' });
+	}
 }

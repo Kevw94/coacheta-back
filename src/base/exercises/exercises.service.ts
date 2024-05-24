@@ -15,15 +15,12 @@ export class ExercisesService {
 	}
 
 	async getOneExercise(exerciseId: string) {
-		const exercise = await this.exercisesRepository.findOne({_id: new ObjectId(exerciseId)})
+		const exercise = await this.exercisesRepository.findOne({ _id: new ObjectId(exerciseId) });
 		return exercise;
 	}
-
 
 	async getExerciseByCategory(category: BodyPart) {
-		const exercise = await this.exercisesRepository.findMany({bodyPart: category})
+		const exercise = await this.exercisesRepository.findMany({ bodyPart: category });
 		return exercise;
 	}
-
-
 }

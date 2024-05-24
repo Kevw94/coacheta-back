@@ -6,9 +6,9 @@ import { AuthModule } from '@/auth/auth.module';
 import { DatabaseModule } from '@/external-modules/database/mongo.module';
 
 @Module({
-    imports: [DatabaseModule, forwardRef(() => AuthModule)],
-    providers: [UsersService, UsersRepository],
-    controllers: [UsersController],
-    exports: [UsersService],
+	imports: [DatabaseModule, forwardRef(() => AuthModule)],
+	providers: [UsersService, UsersRepository],
+	controllers: [UsersController],
+	exports: [UsersService],
 })
 export class UsersModule {}

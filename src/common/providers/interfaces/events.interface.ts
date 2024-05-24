@@ -7,5 +7,5 @@ export enum Events {
 export enum MailjetTemplate {
 	askActivationToken = 5899309,
 	askResetPassword = 5289038,
-	accountValidated = 5903460
+	accountValidated = 5903460,
 }

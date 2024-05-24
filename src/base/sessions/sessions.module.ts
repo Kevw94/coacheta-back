@@ -5,9 +5,9 @@ import { SessionsRepository } from '@/base/sessions/sessions.repository';
 import { DatabaseModule } from '@/external-modules/database/mongo.module';
 
 @Module({
-    imports: [DatabaseModule],
-    providers: [SessionsService, SessionsRepository],
-    controllers: [SessionsController],
-    exports: [SessionsService],
+	imports: [DatabaseModule],
+	providers: [SessionsService, SessionsRepository],
+	controllers: [SessionsController],
+	exports: [SessionsService],
 })
 export class SessionsModule {}

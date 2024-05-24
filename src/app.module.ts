@@ -18,7 +18,7 @@ import { NotificationsModule } from './base/notifications/notifications.module';
 import { TrainingsModule } from './trainings/trainings.module';
 
 @Module({
-    imports: [
+	imports: [
 		AuthModule,
 		UsersModule,
 		DatabaseModule,
@@ -35,7 +35,7 @@ import { TrainingsModule } from './trainings/trainings.module';
 		NotificationsModule,
 		TrainingsModule,
 	],
-    controllers: [AppController],
-    providers: [AppService],
+	controllers: [AppController],
+	providers: [AppService],
 })
 export class AppModule {}
