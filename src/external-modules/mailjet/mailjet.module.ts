@@ -8,7 +8,7 @@ import * as MJ from 'node-mailjet';
 		{
 			provide: 'MAILJET_CLIENT',
 			useFactory: async (): Promise<MJ.Client> => {
-			const mailjet = MJ.Client.apiConnect(config.mailjet.user, config.mailjet.pass);
+				const mailjet = MJ.Client.apiConnect(config.mailjet.user, config.mailjet.pass);
 
 				return mailjet;
 			},

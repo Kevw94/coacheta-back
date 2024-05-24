@@ -3,7 +3,7 @@ import { FollowedService } from './followed.service';
 import { FollowedController } from './followed.controller';
 
 @Module({
-  providers: [FollowedService],
-  controllers: [FollowedController]
+	providers: [FollowedService],
+	controllers: [FollowedController],
 })
 export class FollowedModule {}

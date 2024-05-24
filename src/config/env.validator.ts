@@ -3,28 +3,28 @@
  *
  *! Note: It should always be imported and configured before anything else.
  */
- import * as dotenv from 'dotenv';
- dotenv.config();
+import * as dotenv from 'dotenv';
+dotenv.config();
 
- // \n compatible for macOS and Window
- import { EOL } from 'os';
+// \n compatible for macOS and Window
+import { EOL } from 'os';
 
- const envsToCheck = [
-	 'PORT',
-	 'WHITELIST',
-	 'FRONT_URL_REDIRECT',
-	 'MONGO_URI',
-	 'MONGO_DBNAME',
-	 'MAILJET_USER',
-	 'MAILJET_PASS',
-	 'MAILJET_NOREPLY',
- ];
+const envsToCheck = [
+	'PORT',
+	'WHITELIST',
+	'FRONT_URL_REDIRECT',
+	'MONGO_URI',
+	'MONGO_DBNAME',
+	'MAILJET_USER',
+	'MAILJET_PASS',
+	'MAILJET_NOREPLY',
+];
 
- const missing = [];
- for (const checked of envsToCheck) {
-	 if (!process.env[checked]) missing.push(`undefined process.env.${checked}`);
- }
+const missing = [];
+for (const checked of envsToCheck) {
+	if (!process.env[checked]) missing.push(`undefined process.env.${checked}`);
+}
 
- if (missing.length > 0) {
-	 throw new Error(`${EOL}${missing.join(EOL)}${EOL}Trace:`);
- }
+if (missing.length > 0) {
+	throw new Error(`${EOL}${missing.join(EOL)}${EOL}Trace:`);
+}

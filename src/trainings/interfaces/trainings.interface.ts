@@ -12,9 +12,9 @@ export interface Training {
 export interface Participant {
 	participant_id: string;
 	status: StatusParticipant;
-};
+}
 
 export enum StatusParticipant {
-	invited = "invited",
-	confirmed = "confirmed"
+	invited = 'invited',
+	confirmed = 'confirmed',
 }

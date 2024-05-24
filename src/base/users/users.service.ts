@@ -1,10 +1,9 @@
 import { Filter, FindOneAndUpdateOptions, FindOptions, ObjectId, UpdateFilter } from 'mongodb';
-import { Inject, Injectable, forwardRef, Logger as NestLogger } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { UsersRepository } from '@/base/users/users.repository';
-import { ProfileBodyDTO } from '@/base/users/dto/users.dto';
+import { UpdateProfileDTO } from '@/base/users/dto/users.dto';
 import { flatten } from 'mongo-dot-notation';
 import { User } from './interfaces/users.interface';
-import { ServiceError } from '@/common/decorators/catch.decorator';
 
 @Injectable()
 export class UsersService {
@@ -12,17 +11,6 @@ export class UsersService {
 		@Inject(forwardRef(() => UsersRepository))
 		private usersRepository: UsersRepository,
 	) {}
-
-
-	async updateUserProfile(userId: ObjectId, body: ProfileBodyDTO) {
-		const { username } = body.profile
-		const userNameAlreadyExists = this.usersRepository.findOne({"profile.username": username})
-		if (userNameAlreadyExists !== null) throw new ServiceError('BAD_REQUEST', 'Error 400');
-
-		const update = flatten(body);
-		const query = { _id: userId };
-		await this.usersRepository.updateOneUser(query, update);
-	}
 
 	async tryRegisterUser(user: User) {
 		return this.usersRepository.createUser(user);
@@ -66,11 +54,12 @@ export class UsersService {
 		);
 	}
 
-	// async updateUserProfile(userId: string, body: UpdateUserProfileDTO) {
-	// 	const update = flatten(body);
-	// 	const query = { _id: new ObjectId(userId) };
-	// 	await this.usersRepository.updateOneUser(query, update);
-	// }
+	async updateUserProfile(userId: ObjectId, body: any) {
+		const update = flatten(body);
+		console.log('update : ', update);
+		const query = { _id: new ObjectId(userId) };
+		await this.usersRepository.updateOneUser(query, update);
+	}
 
 	async searchUser(search: string) {
 		const query = {
@@ -92,5 +81,4 @@ export class UsersService {
 		);
 		return user;
 	}
-
 }

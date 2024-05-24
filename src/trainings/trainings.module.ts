@@ -8,6 +8,6 @@ import { TrainingsRepository } from './trainings.repository';
 	imports: [DatabaseModule],
 	providers: [TrainingsService, TrainingsRepository],
 	controllers: [TrainingsController],
-	exports: [TrainingsService]
+	exports: [TrainingsService],
 })
 export class TrainingsModule {}

@@ -9,8 +9,8 @@ import cookieParser from 'cookie-parser';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
-	const PORT = config.app.port
-    const app = await NestFactory.create(AppModule, {
+	const PORT = config.app.port;
+	const app = await NestFactory.create(AppModule, {
 		bufferLogs: true,
 	});
 	app.useGlobalPipes(
@@ -22,11 +22,11 @@ async function bootstrap() {
 		}),
 	);
 	const configSwagger = new DocumentBuilder()
-    .setTitle('Coacheta')
-    .setDescription('The Coacheta API')
-    .setVersion('1.0')
-    .addTag('Coacheta')
-    .build();
+		.setTitle('Coacheta')
+		.setDescription('The Coacheta API')
+		.setVersion('1.0')
+		.addTag('Coacheta')
+		.build();
 	const document = SwaggerModule.createDocument(app, configSwagger);
 	SwaggerModule.setup('api', app, document);
 

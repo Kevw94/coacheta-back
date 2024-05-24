@@ -13,7 +13,10 @@ export class TrainingsRepository {
 		return this.trainings.insertOne(query);
 	}
 
-	async updateOneTrainings(query: Filter<Training>, update: Partial<Training> | UpdateFilter<Training>) {
+	async updateOneTrainings(
+		query: Filter<Training>,
+		update: Partial<Training> | UpdateFilter<Training>,
+	) {
 		return this.trainings.updateOne(query, update);
 	}
 

@@ -10,10 +10,9 @@ export class TrainingsService {
 		private trainingsRepository: TrainingsRepository,
 	) {}
 
-
 	async getUsersTrainings(id: ObjectId) {
-		const trainings = await this.trainingsRepository.findMany({_id: id})
-		return trainings
+		const trainings = await this.trainingsRepository.findMany({ _id: id });
+		return trainings;
 	}
 
 	async getTrainingsByDate(id: ObjectId, startDate: string, endDate?: string) {
@@ -28,8 +27,8 @@ export class TrainingsService {
 				date: {
 					$gte: startOfDay,
 					$lte: endOfDay,
-				}
-			})
+				},
+			});
 			return trainings;
 		} else {
 			const endOfDay = new Date(start.setHours(23, 59, 59, 999));
@@ -38,8 +37,8 @@ export class TrainingsService {
 				date: {
 					$gte: startOfDay,
 					$lte: endOfDay,
-				}
-			})
+				},
+			});
 			return trainings;
 		}
 	}

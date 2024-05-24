@@ -9,6 +9,6 @@ import { DatabaseModule } from '@/external-modules/database/mongo.module';
 	imports: [DatabaseModule, forwardRef(() => AuthModule)],
 	providers: [UsersService, UsersRepository],
 	controllers: [UsersController],
-	exports: [UsersService]
+	exports: [UsersService],
 })
-export class UsersModule { }
+export class UsersModule {}
