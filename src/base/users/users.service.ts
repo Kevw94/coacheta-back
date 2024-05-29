@@ -56,7 +56,6 @@ export class UsersService {
 
 	async updateUserProfile(userId: ObjectId, body: any) {
 		const update = flatten(body);
-		console.log('update : ', update);
 		const query = { _id: new ObjectId(userId) };
 		await this.usersRepository.updateOneUser(query, update);
 	}

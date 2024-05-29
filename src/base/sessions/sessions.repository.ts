@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Filter, UpdateFilter, FindOneAndUpdateOptions, FindOptions, Db } from 'mongodb';
+import { Filter, UpdateFilter, FindOptions, Db, ObjectId } from 'mongodb';
 import { Session } from './interfaces/sessions.interface';
 @Injectable()
 export class SessionsRepository {
@@ -20,14 +20,6 @@ export class SessionsRepository {
 		return this.sessions.updateOne(query, update);
 	}
 
-	async findOneAndUpdateSession(
-		query: Filter<Session>,
-		update: UpdateFilter<Session>,
-		options: FindOneAndUpdateOptions = undefined,
-	) {
-		return this.sessions.findOneAndUpdate(query, update, options);
-	}
-
 	async findOne(query: Filter<Session>, options: FindOptions<Session> = undefined) {
 		return this.sessions.findOne(query, options);
 	}
@@ -41,5 +33,10 @@ export class SessionsRepository {
 	}
 	async getAllSessions() {
 		return this.sessions.find().toArray();
+	}
+
+	async deleteSessionById(sessionId: ObjectId) {
+		console.log('caca repo');
+		return this.sessions.deleteOne({ _id: sessionId });
 	}
 }
