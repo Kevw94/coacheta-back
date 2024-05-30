@@ -64,7 +64,6 @@ export class SessionsService {
 		});
 
 		if (session.creator_id.equals(userId)) {
-			console.log('caca service');
 			return this.sessionsRepository.deleteSessionById(formattedSessionId);
 		} else {
 			throw new BadRequestException(`Session ${sessionId} cannot be deleted!`);

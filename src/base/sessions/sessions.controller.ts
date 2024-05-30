@@ -50,7 +50,6 @@ export class SessionsController {
 	@ApiResponse({ status: 200, description: 'ok' })
 	@ApiBadRequestResponse({ description: 'BAD_REQUEST' })
 	async deleteSession(@Param('id') id: string, @Jwt() userId: ObjectId) {
-		console.log('caca controller');
 		return this.sessionsService.deleteOneSession(id, userId);
 	}
 }
