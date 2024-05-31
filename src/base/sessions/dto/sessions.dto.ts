@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class SessionsDto {
@@ -30,3 +30,5 @@ export class SessionsDto {
 	@IsOptional()
 	coverImageUri: any;
 }
+
+export class UpdateSessionDto extends PartialType(SessionsDto) {}
