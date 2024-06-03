@@ -1,9 +1,11 @@
+import { Moment } from 'moment';
 import { ObjectId } from 'mongodb';
 
 export interface Training {
-	_id: ObjectId;
+	_id?: ObjectId;
 	session_id: string;
-	date: Date;
+	creator_id: string;
+	date: Moment;
 	sets_id: string[];
 	participants: Participant[];
 	isDone: boolean;
