@@ -9,7 +9,7 @@ export class TrainingsRepository {
 		return this.db.collection<Training>('trainings');
 	}
 
-	async createTrainings(query: Training) {
+	async createTraining(query: Training) {
 		return this.trainings.insertOne(query);
 	}
 

@@ -5,6 +5,7 @@ import { Jwt } from '@/common/decorators/jwt.decorator';
 import { Response } from 'express';
 import { ObjectId } from 'mongodb';
 import { ApiBadRequestResponse, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { TrainingsDto } from './dto/trainings.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('trainings')
@@ -23,10 +24,10 @@ export class TrainingsController {
 	@ApiBadRequestResponse({ description: 'BAD_REQUEST' })
 	async createTraining(
 		@Jwt() userId: ObjectId,
-		@Body() session_id: string,
+		@Body() body: TrainingsDto,
 		@Res() res: Response,
 	) {
-		await this.trainingsService.createTraining(userId, session_id);
+		await this.trainingsService.createTraining(userId, body);
 		return res.status(201).json({ status: 'ok' });
 	}
 

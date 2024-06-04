@@ -1,9 +1,7 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, forwardRef, Inject, Injectable } from '@nestjs/common';
 import { TrainingsRepository } from './trainings.repository';
 import { ObjectId } from 'mongodb';
-import moment from 'moment';
 import { TrainingsDto } from './dto/trainings.dto';
-import { StatusParticipant } from './interfaces/trainings.interface';
 
 @Injectable()
 export class TrainingsService {
@@ -12,22 +10,13 @@ export class TrainingsService {
 		private trainingsRepository: TrainingsRepository,
 	) {}
 
-	async createTraining(userId: ObjectId, sessionId: string) {
-		const newTraining: TrainingsDto = {
-			session_id: sessionId,
-			creator_id: userId.toHexString(),
-			date: moment(),
-			sets_id: [],
-			participants: [
-				{
-					participant_id: userId.toHexString(),
-					status: StatusParticipant.confirmed,
-				},
-			],
-			isDone: false,
-		};
-
-		return this.trainingsRepository.createTrainings(newTraining);
+	async createTraining(userId: ObjectId, body: TrainingsDto) {
+		const formattedId = userId.toString();
+		if (body.creator_id === formattedId) {
+			return this.trainingsRepository.createTraining(body);
+		} else {
+			throw new BadRequestException('you cannot create a training!');
+		}
 	}
 
 	async getUsersTrainings(id: ObjectId) {
