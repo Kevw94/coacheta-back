@@ -1,99 +1,33 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SessionsService } from './sessions.service';
-import { ObjectId } from 'mongodb';
+import { Db, MongoClient, ObjectId } from 'mongodb';
 import { SessionsRepository } from '../sessions/sessions.repository';
 
 describe('SessionsService', () => {
 	let service: SessionsService;
-	const userId: ObjectId = new ObjectId('6629786312ccdffe8421f7ae');
+	const userId: ObjectId = new ObjectId('6629786312ccdffe8421f7aa');
+	const mongoUri: string = 'mongodb://localhost:27090';
+	const mongoDbName: string = 'coacheta';
 
 	beforeEach(async () => {
+
 		const module: TestingModule = await Test.createTestingModule({
 			providers: [
 				SessionsService,
 				{
-					provide: SessionsRepository,
-					useValue: {
-						getSessions: jest.fn().mockResolvedValue([
-							{
-								_id: new ObjectId('664dfa02a890fa254b8b86b7'),
-								creator_id: userId,
-								name: 'Ma Séance 1',
-								description: 'Description 1',
-								exercises_id: [
-									new ObjectId('662b5612e742abc24928c363'),
-									new ObjectId('662b5612e742abc24928c38b'),
-									new ObjectId('662b5612e742abc24928c38a'),
-									new ObjectId('662b5612e742abc24928c73d'),
-									new ObjectId('662b5612e742abc24928c7ad'),
-									new ObjectId('662b5612e742abc24928c356'),
-								],
-								coverImageUri: { uri: '' },
-							},
-							{
-								_id: new ObjectId('664e707746c240a7dcc8fa61'),
-								creator_id: userId,
-								name: 'Ma Séance 2',
-								description: 'Une description 2',
-								exercises_id: [
-									new ObjectId('662b5612e742abc24928c7ad'),
-									new ObjectId('662b5612e742abc24928c73d'),
-									new ObjectId('662b5612e742abc24928c35e'),
-									new ObjectId('662b5612e742abc24928c35c'),
-									new ObjectId('662b5612e742abc24928c39c'),
-								],
-								coverImageUri: { uri: '' },
-							},
-							{
-								_id: new ObjectId('664e70ed46c240a7dcc8fa62'),
-								creator_id: userId,
-								name: 'Ma Séance 3',
-								description: 'Description 3',
-								exercises_id: [new ObjectId('662b5612e742abc24928c370')],
-								coverImageUri: { uri: '' },
-							},
-						]),
-						findMany: jest.fn().mockResolvedValue([
-							{
-								_id: new ObjectId('664dfa02a890fa254b8b86b7'),
-								creator_id: userId,
-								name: 'Ma Séance 1',
-								description: 'Description 1',
-								exercises_id: [
-									new ObjectId('662b5612e742abc24928c363'),
-									new ObjectId('662b5612e742abc24928c38b'),
-									new ObjectId('662b5612e742abc24928c38a'),
-									new ObjectId('662b5612e742abc24928c73d'),
-									new ObjectId('662b5612e742abc24928c7ad'),
-									new ObjectId('662b5612e742abc24928c356'),
-								],
-								coverImageUri: { uri: '' },
-							},
-							{
-								_id: new ObjectId('664e707746c240a7dcc8fa61'),
-								creator_id: userId,
-								name: 'Ma Séance 2',
-								description: 'Une description 2',
-								exercises_id: [
-									new ObjectId('662b5612e742abc24928c7ad'),
-									new ObjectId('662b5612e742abc24928c73d'),
-									new ObjectId('662b5612e742abc24928c35e'),
-									new ObjectId('662b5612e742abc24928c35c'),
-									new ObjectId('662b5612e742abc24928c39c'),
-								],
-								coverImageUri: { uri: '' },
-							},
-							{
-								_id: new ObjectId('664e70ed46c240a7dcc8fa62'),
-								creator_id: userId,
-								name: 'Ma Séance 3',
-								description: 'Description 3',
-								exercises_id: [new ObjectId('662b5612e742abc24928c370')],
-								coverImageUri: { uri: '' },
-							},
-						]),
+					provide: 'DATABASE_CONNECTION',
+					useFactory: async (): Promise<Db> => {
+						const client = await MongoClient.connect(mongoUri, {
+							//! Production settings
+							// useUnifiedTopology: true,
+							// useNewUrlParser: true,
+							// tls:true,
+						});
+
+						return client.db(mongoDbName);
 					},
 				},
+				SessionsRepository,
 			],
 		}).compile();
 
