@@ -13,4 +13,13 @@ export class FollowersService {
 		const followers = await this.followersRepository.findOne({ user_id: userId });
 		return followers;
 	}
+
+	async initFollowers(insertedId: ObjectId) {
+		const followers = {
+			user_id: insertedId,
+			userFollowing: [],
+		};
+
+		this.followersRepository.createFollower(followers);
+	}
 }

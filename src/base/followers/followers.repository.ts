@@ -7,7 +7,11 @@ export class FollowersRepository {
 	constructor(@Inject('DATABASE_CONNECTION') private db: Db) {}
 
 	get follower() {
-		return this.db.collection<Followers>('followed');
+		return this.db.collection<Followers>('followers');
+	}
+
+	async createFollower(query: Followers) {
+		return this.follower.insertOne(query);
 	}
 
 	async findOne(query: Filter<Followers>, options: FindOptions<Followers> = undefined) {

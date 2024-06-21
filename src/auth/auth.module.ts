@@ -10,6 +10,10 @@ import { AuthEventEmitter } from './events/auth.event';
 import { LocalStrategy } from './strategy/local.strategy';
 import { JwtStrategy } from './strategy/jwt.strategy';
 import { MailjetListeners } from '@/common/providers/mailjet.provider';
+import {FollowedService} from "@/base/followed/followed.service";
+import {FollowersService} from "@/base/followers/followers.service";
+import {FollowedRepository} from "@/base/followed/followed.repository";
+import {FollowersRepository} from "@/base/followers/followers.repository";
 
 @Module({
 	imports: [
@@ -22,6 +26,16 @@ import { MailjetListeners } from '@/common/providers/mailjet.provider';
 		}),
 	],
 	controllers: [AuthController],
-	providers: [AuthService, AuthEventEmitter, LocalStrategy, JwtStrategy, MailjetListeners],
+	providers: [
+		AuthService,
+		AuthEventEmitter,
+		LocalStrategy,
+		JwtStrategy,
+		MailjetListeners,
+		FollowedService,
+		FollowersService,
+		FollowedRepository,
+		FollowersRepository,
+	],
 })
 export class AuthModule {}

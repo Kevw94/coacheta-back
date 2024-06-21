@@ -10,6 +10,10 @@ export class FollowedRepository {
         return this.db.collection<Followed>('followed');
     }
 
+    async createFollowed(query: Followed) {
+        return this.followedPeople.insertOne(query)
+    }
+
     async findOne(query: Filter<Followed>, options: FindOptions<Followed> = undefined) {
         return this.followedPeople.findOne(query, options);
     }

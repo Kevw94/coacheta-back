@@ -47,15 +47,16 @@ export class AuthService {
 			created_at: new Date(),
 			activation_token: generateCodeToken(),
 		};
-
+		let tryCreateUser = null;
 		try {
-			const tryCreateUser = await this.usersService.tryRegisterUser(newUser);
+			 tryCreateUser = await this.usersService.tryRegisterUser(newUser);
 			if (!tryCreateUser.acknowledged) throw new ServiceError('BAD_REQUEST', 'Error 400');
 		} catch (err) {
 			throw new ServiceError('BAD_REQUEST', 'Error 400');
 		}
 
 		this.authEventEmitter.askActivationToken(email, newUser.activation_token);
+		return tryCreateUser.insertedId;
 	}
 
 	async validateUser(email: string, password: string) {
