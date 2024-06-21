@@ -36,7 +36,6 @@ export class SessionsRepository {
 	}
 
 	async deleteSessionById(sessionId: ObjectId) {
-		console.log('caca repo');
 		return this.sessions.deleteOne({ _id: sessionId });
 	}
 }
