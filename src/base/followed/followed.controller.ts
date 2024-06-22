@@ -18,13 +18,16 @@ export class FollowedController {
 		return res.status(200).json({ status: 'ok', followed: followed });
 	}
 
-	/*
 	@Post('')
 	async addPersonFollowed(@Jwt() userId: ObjectId, @Body() body: any)
 	{
 		//this.followedService.is
+		console.log("*************")
+		console.log(body);
+		console.log("*************")
+		this.followedService.addFollowed(userId, body.friendname);
+
 	}
-*/
 
 	// TODO create add friends if exist update tableau if not create, then do test, then display it in front,
 }

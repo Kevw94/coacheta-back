@@ -80,4 +80,12 @@ export class UsersService {
 		);
 		return user;
 	}
+
+	async getUserFromName(name: string) {
+		const user = await this.usersRepository.findOne(
+			{ 'profile.username': name },
+			{ projection: { _id: 1, 'profile.password': 0 } },
+		);
+		return user;
+	}
 }
