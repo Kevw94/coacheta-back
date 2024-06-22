@@ -5,7 +5,7 @@ import {
 	Injectable,
 	NotFoundException,
 } from '@nestjs/common';
-import { SessionsRepository } from '@/base/sessions/sessions.repository';
+import { SessionsRepository } from '../sessions/sessions.repository';
 import { SessionsDto, UpdateSessionDto } from '@/base/sessions/dto/sessions.dto';
 import { ObjectId } from 'mongodb';
 import { Session } from './interfaces/sessions.interface';
