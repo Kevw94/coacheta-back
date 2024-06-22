@@ -19,11 +19,9 @@ export class FollowedController {
 	}
 
 	@Post('')
-	async addPersonFollowed(@Jwt() userId: ObjectId, @Body() body: any)
-	{
+	async addPersonFollowed(@Jwt() userId: ObjectId, @Body() body: { friendname: string }) {
 		await this.followedService.addFollowed(userId, body.friendname);
-
 	}
 
-	// TODO create add friends if exist update tableau if not create, then do test, then display it in front,
+	// TODO then do test, then display it in front,
 }

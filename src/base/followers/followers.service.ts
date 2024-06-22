@@ -25,10 +25,10 @@ export class FollowersService {
 		this.followersRepository.createFollower(followers);
 
 
-		// TODO Take exactly what i did from followed, refacto back, apply tests, refacto front
+		// TODO refacto back, apply tests, refacto front
 	}
 
-	async addFollower(userId: ObjectId, name: any) {
+	async addFollower(userId: ObjectId, name: string) {
 
 		const follower = await this.followersRepository.findOne({
 			user_id: userId,

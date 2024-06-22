@@ -31,7 +31,7 @@ export class FollowedService {
 		this.followedRepository.createFollowed(followed);
 	}
 
-	async addFollowed(userId: ObjectId, name: any) {
+	async addFollowed(userId: ObjectId, name: string) {
 
 		const followed = await this.followedRepository.findOne({
 			user_id: userId,

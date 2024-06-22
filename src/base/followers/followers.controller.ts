@@ -19,7 +19,7 @@ export class FollowersController {
 	}
 
 	@Post('')
-	async addPersonFollowed(@Jwt() userId: ObjectId, @Body() body: any) {
+	async addPersonFollowed(@Jwt() userId: ObjectId, @Body() body: { friendname: string }) {
 		await this.followersService.addFollower(userId, body.friendname);
 	}
 }
