@@ -22,6 +22,4 @@ export class FollowedController {
 	async addPersonFollowed(@Jwt() userId: ObjectId, @Body() body: { friendname: string }) {
 		await this.followedService.addFollowed(userId, body.friendname);
 	}
-
-	// TODO then do test, then display it in front,
 }

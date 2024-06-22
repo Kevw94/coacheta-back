@@ -18,8 +18,8 @@ export class FollowersEntity {
 		type: Array<ObjectId>,
 		example: [
 			new ObjectId('66267514b4cf851b4df7fadb'),
-			new ObjectId('66267514b4cf851b4df7fadb'),
-			new ObjectId('66267514b4cf851b4df7fadb'),
+			new ObjectId('66267514b4cf851b4df7fadc'),
+			new ObjectId('66267514b4cf851b4df7fadv'),
 		],
 	})
 	userFollowing?: Array<ObjectId>;

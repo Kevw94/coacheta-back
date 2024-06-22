@@ -28,33 +28,38 @@ export class FollowedService {
 			userFollowed: [],
 		};
 
-		this.followedRepository.createFollowed(followed);
+		await this.followedRepository.createFollowed(followed);
 	}
 
 	async addFollowed(userId: ObjectId, name: string) {
-
 		const followed = await this.followedRepository.findOne({
 			user_id: userId,
 		});
 
 		if (!followed) {
-			throw new NotFoundException(`Followed for user with ID ${userId} not found`);
+			throw new NotFoundException(`Followed list for user with ID ${userId} not found`);
 		}
 
+		// Get the user information of the friend by their name
 		const friendUser = await this.usersService.getUserFromName(name);
 
 		if (!friendUser) {
-			throw new NotFoundException(`Not valid Friend name`);
+			throw new NotFoundException(`Invalid friend name: ${name}`);
 		}
 
 		const friendId = friendUser._id;
+
+		// Check if the user is trying to follow themselves
 		if (userId.equals(friendId)) {
-			throw new BadRequestException('user id same as the requested one');
+			throw new BadRequestException('User ID is the same as the requested friend ID');
 		}
+
+		// Check if the friend is already in the followed list
 		const friendsArray = followed.userFollowed;
-		const alreadyFriend = followed.userFollowed.some((followed) => followed.equals(friendId));
+		const alreadyFriend = friendsArray.some((followedId) => followedId.equals(friendId));
 
 		if (!alreadyFriend) {
+			// Add the friend to the followed list
 			await this.followedRepository.updateOneFollowed(
 				{ _id: followed._id },
 				{ $set: { ...followed, userFollowed: [...friendsArray, friendId] } },
