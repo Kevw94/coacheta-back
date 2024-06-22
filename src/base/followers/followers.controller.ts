@@ -1,4 +1,4 @@
-import { Controller, Get, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '@/common/guards/auth.guard';
 import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
@@ -16,5 +16,10 @@ export class FollowersController {
 	async getFollowers(@Jwt() userId: ObjectId, @Res() res: Response) {
 		const followers = await this.followersService.getFollowers(userId);
 		return res.status(200).json({ status: 'ok', followers: followers });
+	}
+
+	@Post('')
+	async addPersonFollowed(@Jwt() userId: ObjectId, @Body() body: any) {
+		await this.followersService.addFollower(userId, body.friendname);
 	}
 }

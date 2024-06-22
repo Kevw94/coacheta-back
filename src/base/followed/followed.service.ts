@@ -1,4 +1,10 @@
-import { forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+	BadRequestException,
+	forwardRef,
+	Inject,
+	Injectable,
+	NotFoundException,
+} from '@nestjs/common';
 import { FollowedRepository } from '@/base/followed/followed.repository';
 import { ObjectId } from 'mongodb';
 import { UsersService } from '@/base/users/users.service';
@@ -26,9 +32,6 @@ export class FollowedService {
 	}
 
 	async addFollowed(userId: ObjectId, name: any) {
-		console.log('seervice ');
-		console.log(name);
-		console.log('service ');
 
 		const followed = await this.followedRepository.findOne({
 			user_id: userId,
@@ -45,10 +48,12 @@ export class FollowedService {
 		}
 
 		const friendId = friendUser._id;
+		if (userId.equals(friendId)) {
+			throw new BadRequestException('user id same as the requested one');
+		}
 		const friendsArray = followed.userFollowed;
 		const alreadyFriend = followed.userFollowed.some((followed) => followed.equals(friendId));
 
-		console.log(alreadyFriend);
 		if (!alreadyFriend) {
 			await this.followedRepository.updateOneFollowed(
 				{ _id: followed._id },

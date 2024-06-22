@@ -21,11 +21,7 @@ export class FollowedController {
 	@Post('')
 	async addPersonFollowed(@Jwt() userId: ObjectId, @Body() body: any)
 	{
-		//this.followedService.is
-		console.log("*************")
-		console.log(body);
-		console.log("*************")
-		this.followedService.addFollowed(userId, body.friendname);
+		await this.followedService.addFollowed(userId, body.friendname);
 
 	}
 

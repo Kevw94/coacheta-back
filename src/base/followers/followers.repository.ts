@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Filter, FindOptions, Db } from 'mongodb';
+import {Filter, FindOptions, Db, UpdateFilter} from 'mongodb';
 import { Followers } from './interfaces/followers.interface';
+import {Followed} from "@/base/followed/interfaces/followed.interface";
 
 @Injectable()
 export class FollowersRepository {
@@ -21,7 +22,14 @@ export class FollowersRepository {
 	async findMany(query: Filter<Followers>, options: FindOptions<Followers> = undefined) {
 		return this.follower.find(query, options).toArray();
 	}
-	async getAllFitnessExercises() {
+	async getAllFollowers() {
 		return this.follower.find().toArray();
+	}
+
+	async updateOneFollowers(
+		query: Filter<Followers>,
+		update: Partial<Followers> | UpdateFilter<Followers>,
+	) {
+		return this.follower.updateOne(query, update);
 	}
 }
