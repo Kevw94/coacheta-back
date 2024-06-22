@@ -1,6 +1,6 @@
 import { Filter, FindOneAndUpdateOptions, FindOptions, ObjectId, UpdateFilter } from 'mongodb';
 import { Inject, Injectable, forwardRef } from '@nestjs/common';
-import { UsersRepository } from '@/base/users/users.repository';
+import { UsersRepository } from '../../base/users/users.repository';
 import { UpdateProfileDTO } from '@/base/users/dto/users.dto';
 import { flatten } from 'mongo-dot-notation';
 import { User } from './interfaces/users.interface';
@@ -84,7 +84,7 @@ export class UsersService {
 	async getUserFromName(name: string) {
 		const user = await this.usersRepository.findOne(
 			{ 'profile.username': name },
-			{ projection: { _id: 1, 'profile.password': 0 } },
+			{ projection: { _id: 1, 'hashedPassword': 0 } },
 		);
 		return user;
 	}

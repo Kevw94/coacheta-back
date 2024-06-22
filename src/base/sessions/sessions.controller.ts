@@ -18,8 +18,6 @@ export class SessionsController {
 	@Get('')
 	async getSessions(@Jwt() userId: ObjectId, @Res() res: Response) {
 		const sessions = await this.sessionsService.getSessions(userId);
-		console.log(sessions);
-
 		return res.status(200).json({ status: 'ok', sessions: sessions });
 	}
 

@@ -18,10 +18,6 @@ describe('SessionsService', () => {
 					provide: 'DATABASE_CONNECTION',
 					useFactory: async (): Promise<Db> => {
 						const client = await MongoClient.connect(mongoUri, {
-							//! Production settings
-							// useUnifiedTopology: true,
-							// useNewUrlParser: true,
-							// tls:true,
 						});
 
 						return client.db(mongoDbName);
@@ -40,7 +36,6 @@ describe('SessionsService', () => {
 
 	it('should return the correct session data', async () => {
 		const sessions = await service.getSessions(userId);
-		expect(sessions).toBeDefined();
 		expect(Array.isArray(sessions)).toBe(true);
 		sessions.forEach((session) => {
 			expect(session).toHaveProperty('_id');
