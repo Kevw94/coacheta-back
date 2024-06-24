@@ -42,4 +42,10 @@ export class TrainingsService {
 			return trainings;
 		}
 	}
+
+	async createTraining(training: Training) {
+		const response = await this.trainingsRepository.createTrainings(training);
+		const trainingResponse = await this.trainingsRepository.findOne({_id: new ObjectId(response.insertedId)})
+		return trainingResponse;
+	}
 }
