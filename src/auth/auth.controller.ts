@@ -20,18 +20,28 @@ import {
 	ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { UserEntity } from '@/base/users/entities/users.entity';
+import { FollowersService } from '@/base/followers/followers.service';
+import { FollowedService } from '@/base/followed/followed.service';
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-	constructor(private readonly authService: AuthService) {}
+	constructor(
+		private readonly authService: AuthService,
+		private readonly followersService: FollowersService,
+		private readonly followedService: FollowedService,
+	) {}
 
 	@Post('signup')
 	@ApiOperation({ summary: 'Create user' })
 	@ApiResponse({ status: 201, description: 'ok' })
 	@ApiBadRequestResponse({ description: 'BAD_REQUEST' })
 	async signUp(@Body() body: DTOAuthSignup, @Res() res: Response) {
-		await this.authService.signup(body);
+		await this.authService.signup(body).then(
+			async (insertedId) => {
+			await this.followersService.initFollowers(insertedId);
+			await this.followedService.initFollowed(insertedId);
+		});
 		return res.status(201).json({ status: 'ok' });
 	}
 
