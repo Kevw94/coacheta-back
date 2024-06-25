@@ -45,7 +45,6 @@ export class SessionsController {
 		@Body() body: UpdateSessionDto,
 		@Jwt() userId: ObjectId,
 	): Promise<Session> {
-		console.log('request body: ', body);
 		return this.sessionsService.findOneAndUpdateSession(id, userId, body);
 	}
 
