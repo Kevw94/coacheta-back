@@ -2,12 +2,15 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { SetsRepository } from './sets.repository';
 import { ObjectId, ReturnDocument } from 'mongodb';
 import { Set } from './interfaces/sets.interface';
+import { TrainingsService } from '@/trainings/trainings.service';
 
 @Injectable()
 export class SetsService {
 	constructor(
 		@Inject(forwardRef(() => SetsRepository))
 		private setsRepository: SetsRepository,
+		@Inject(forwardRef(() => TrainingsService))
+		private trainingsService: TrainingsService,
 	) {}
 
 	async createSets(set: Set) {
@@ -15,6 +18,9 @@ export class SetsService {
 		const options = { projection: { _id: 1 } };
 		const setReturn = await this.setsRepository.findOne({_id: new ObjectId(response.insertedId)});
 		console.log("setReturn,", setReturn);
+		const trainingUpdate = await this.trainingsService.addSetTraining(set);
+		console.log("TrainingUpdate", trainingUpdate);
+
 
 		return setReturn;
 	}
