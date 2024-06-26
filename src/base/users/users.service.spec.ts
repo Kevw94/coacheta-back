@@ -6,9 +6,9 @@ import { UsersRepository } from '../../base/users/users.repository';
 describe('UsersService', () => {
 	let service: UsersService;
 	const requestedFriendName = 'mohamedn';
-	const mongoUri: string = 'mongodb://localhost:27090';
+	const mongoUri: string = 'mongodb://coacheta:DcJNqtUdVrHohANR63KqnSmcSHkBcQ@51.91.101.108:27017/coacheta';
 	const mongoDbName: string = 'coacheta';
-	const expectedFriendId: ObjectId = new ObjectId('6629786312ccdffe8421f7ae');
+	const expectedFriendId: ObjectId = new ObjectId('667b4fb8bdb528db9e0c5677');
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
