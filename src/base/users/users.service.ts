@@ -74,11 +74,15 @@ export class UsersService {
 	}
 
 	async getUserById(id: string) {
-		const user = await this.usersRepository.findOne(
-			{ _id: new ObjectId(id) },
-			{ projection: { _id: 1, 'profile.password': 0 } },
-		);
-		return user;
+		try {
+			const user = await this.usersRepository.findOne(
+				{ _id: new ObjectId(id) },
+				{ projection: { _id: 1, 'profile.password': 0 } },
+			);
+			return user;
+		} catch (error) {
+			throw new Error(`Erreur lors de la récupération de l'utilisateur : ${error.message}`);
+		}
 	}
 
 	async getUserFromName(name: string) {

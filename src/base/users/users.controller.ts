@@ -1,5 +1,5 @@
 import { Jwt } from '@/common/decorators/jwt.decorator';
-import { Body, Controller, Patch, Res, UseGuards } from '@nestjs/common';
+import {Body, Controller, Get, Param, Patch, Res, UseGuards} from '@nestjs/common';
 import { JwtAuthGuard } from '@/common/guards/auth.guard';
 import { ObjectId } from 'mongodb';
 
@@ -22,5 +22,12 @@ export class UsersController {
 	) {
 		await this.usersService.updateUserProfile(userId, body);
 		return res.status(200).json({ status: 'ok' });
+	}
+
+	@Get(':id')
+	async getUserById(@Param('id') id: string, @Res() res: Response) {
+		const user = await this.usersService.getUserById( id );
+		return res.status(200).json({ status: 'ok', user: user });
+
 	}
 }
