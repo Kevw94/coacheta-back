@@ -16,16 +16,24 @@ export class SessionsController {
 	) {}
 
 	@Get('')
+	@ApiOperation({ summary: 'Get all sessions with userId' })
+	@ApiResponse({ status: 200, description: 'ok' })
+	@ApiBadRequestResponse({ description: 'BAD_REQUEST' })
 	async getSessions(@Jwt() userId: ObjectId, @Res() res: Response) {
 		const sessions = await this.sessionsService.getSessions(userId);
 		return res.status(200).json({ status: 'ok', sessions: sessions });
 	}
 
-	@Get('/:id')
-	async getSessionById(@Res() res: Response, @Param('id') id: string) {
-		const session = await this.sessionsService.findSessionById(id);
+	@Get(':sessionId')
+	@ApiOperation({ summary: 'Get a session by its id' })
+	@ApiResponse({ status: 200, description: 'ok' })
+	@ApiBadRequestResponse({ description: 'BAD_REQUEST' })
+	async getSessionById(@Jwt() userId: ObjectId,@Param("sessionId") sessionId: string, @Res() res: Response) {
+		const session = await this.sessionsService.getSessionById(sessionId);
 		return res.status(200).json({ status: 'ok', session: session });
 	}
+
+
 
 	@Post('create')
 	@ApiOperation({ summary: 'create a session' })

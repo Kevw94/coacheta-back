@@ -1,7 +1,8 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { TrainingsRepository } from './trainings.repository';
-import { Filter, ObjectId } from 'mongodb';
+import { Filter, ObjectId, ReturnDocument } from 'mongodb';
 import { Training } from './interfaces/trainings.interface';
+import { Set } from '@/base/sets/interfaces/sets.interface';
 
 @Injectable()
 export class TrainingsService {
@@ -41,5 +42,20 @@ export class TrainingsService {
 			});
 			return trainings;
 		}
+	}
+
+	async createTraining(training: Training) {
+		const response = await this.trainingsRepository.createTrainings(training);
+		const trainingResponse = await this.trainingsRepository.findOne({_id: new ObjectId(response.insertedId)})
+		return trainingResponse;
+	}
+
+
+	async addSetTraining(set: Set) {
+		const query = { _id: new ObjectId(set.training_id) }
+		const update = { $push: {"sets_id": set._id.toString()}}
+		const options = { returnDocument: ReturnDocument.AFTER};
+		const response = await this.trainingsRepository.findOneAndUpdateTrainings(query, update, options);
+		return response
 	}
 }

@@ -14,12 +14,17 @@ import {FollowedService} from "@/base/followed/followed.service";
 import {FollowersService} from "@/base/followers/followers.service";
 import {FollowedRepository} from "@/base/followed/followed.repository";
 import {FollowersRepository} from "@/base/followers/followers.repository";
+import { FollowersModule } from '@/base/followers/followers.module';
+import { FollowedModule } from '@/base/followed/followed.module';
 
 @Module({
 	imports: [
 		DatabaseModule,
 		MailjetModule,
 		forwardRef(() => UsersModule),
+		//FIXME
+		forwardRef(() => FollowersModule),
+		forwardRef(() => FollowedModule),
 		JwtModule.register({
 			secret: config.jwt.secret,
 			signOptions: { expiresIn: '30d' },
@@ -32,10 +37,6 @@ import {FollowersRepository} from "@/base/followers/followers.repository";
 		LocalStrategy,
 		JwtStrategy,
 		MailjetListeners,
-		FollowedService,
-		FollowersService,
-		FollowedRepository,
-		FollowersRepository,
 	],
 })
 export class AuthModule {}
