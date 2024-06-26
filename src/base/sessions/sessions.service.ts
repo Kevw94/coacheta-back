@@ -80,4 +80,9 @@ export class SessionsService {
 		const sessions = await this.sessionsRepository.findMany({ creator_id: userId });
 		return sessions;
 	}
+
+	async getSessionById(sessionId: string) {
+		const session = await this.sessionsRepository.findOne({_id: new ObjectId(sessionId)})
+		return session;
+	}
 }

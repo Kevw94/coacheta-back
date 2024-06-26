@@ -21,11 +21,13 @@ export class SessionsController {
 		return res.status(200).json({ status: 'ok', sessions: sessions });
 	}
 
-	@Get('/:id')
-	async getSessionById(@Res() res: Response, @Param('id') id: string) {
-		const session = await this.sessionsService.findSessionById(id);
+	@Get(':sessionId')
+	async getSessionById(@Jwt() userId: ObjectId,@Param("sessionId") sessionId: string, @Res() res: Response) {
+		const session = await this.sessionsService.getSessionById(sessionId);
 		return res.status(200).json({ status: 'ok', session: session });
 	}
+
+
 
 	@Post('create')
 	@ApiOperation({ summary: 'create a session' })

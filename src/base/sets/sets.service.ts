@@ -22,7 +22,7 @@ export class SetsService {
 		console.log("TrainingUpdate", trainingUpdate);
 
 
-		return setReturn;
+		return {set: setReturn, training: trainingUpdate};
 	}
 
 	// A tester

@@ -15,7 +15,7 @@ export class SetsController {
 	@Post("")
 	async createSet(@Jwt() userId: ObjectId, @Body() body: Set, @Res() res: Response ) {
 		const response = await this.setsService.createSets(body);
-		return res.status(201).json({status: "ok", set: response})
+		return res.status(201).json({status: "ok", set: response.set, training: response.training})
 	}
 
 
@@ -26,7 +26,7 @@ export class SetsController {
 		@Res() res: Response,
 	) {
 		await this.setsService.deleteSet(body._id);
-		return res.status(200).json({ status: 'ok' });
+		return res.status(201).json({ status: 'ok' });
 	}
 
 	@Patch("")
