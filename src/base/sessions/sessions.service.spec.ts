@@ -6,7 +6,7 @@ import { SessionsRepository } from '../sessions/sessions.repository';
 describe('SessionsService', () => {
 	let service: SessionsService;
 	const userId: ObjectId = new ObjectId('6629786312ccdffe8421f7aa');
-	const mongoUri: string = 'mongodb://localhost:27090';
+	const mongoUri: string = 'mongodb://coacheta:DcJNqtUdVrHohANR63KqnSmcSHkBcQ@51.91.101.108:27017/coacheta';
 	const mongoDbName: string = 'coacheta';
 
 	beforeEach(async () => {
