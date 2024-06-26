@@ -21,6 +21,12 @@ export class SessionsController {
 		return res.status(200).json({ status: 'ok', sessions: sessions });
 	}
 
+	@Get('/:id')
+	async getSessionById(@Res() res: Response, @Param('id') id: string) {
+		const session = await this.sessionsService.findSessionById(id);
+		return res.status(200).json({ status: 'ok', session: session });
+	}
+
 	@Post('create')
 	@ApiOperation({ summary: 'create a session' })
 	@ApiResponse({ status: 201, description: 'ok' })
@@ -39,7 +45,6 @@ export class SessionsController {
 		@Body() body: UpdateSessionDto,
 		@Jwt() userId: ObjectId,
 	): Promise<Session> {
-		console.log('request body: ', body);
 		return this.sessionsService.findOneAndUpdateSession(id, userId, body);
 	}
 

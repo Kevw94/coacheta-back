@@ -28,6 +28,12 @@ export class SessionsService {
 		return this.sessionsRepository.createSession(newSession);
 	}
 
+	async findSessionById(id: string) {
+		return this.sessionsRepository.findOne({
+			_id: new ObjectId(id),
+		});
+	}
+
 	async findOneAndUpdateSession(
 		id: string,
 		userId: ObjectId,
