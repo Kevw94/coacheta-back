@@ -19,7 +19,7 @@ export class SetsService {
 		const setReturn = await this.setsRepository.findOne({_id: new ObjectId(response.insertedId)});
 		console.log("setReturn,", setReturn);
 		const trainingUpdate = await this.trainingsService.addSetTraining(set);
-		console.log("TrainingUpdate", trainingUpdate);
+		console.log("TrainingUpdate in createSets:", trainingUpdate);
 
 
 		return {set: setReturn, training: trainingUpdate};
