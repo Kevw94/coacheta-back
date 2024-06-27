@@ -16,6 +16,7 @@ import {FollowedRepository} from "@/base/followed/followed.repository";
 import {FollowersRepository} from "@/base/followers/followers.repository";
 import { FollowersModule } from '@/base/followers/followers.module';
 import { FollowedModule } from '@/base/followed/followed.module';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Module({
 	imports: [
@@ -37,6 +38,10 @@ import { FollowedModule } from '@/base/followed/followed.module';
 		LocalStrategy,
 		JwtStrategy,
 		MailjetListeners,
+		{
+			provide: 'EventEmitter',
+			useClass: EventEmitter2,
+		},
 	],
 })
 export class AuthModule {}

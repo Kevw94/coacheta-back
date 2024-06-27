@@ -1,0 +1,22 @@
+name: Test SSH Connection
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  test-connection:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Test SSH connection
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USER }}
+        key: ${{ secrets.VPS_KEY }}
+        script: echo "SSH connection successful!"
