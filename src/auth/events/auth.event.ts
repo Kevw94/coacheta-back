@@ -1,11 +1,11 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { MailjetAskResetPassword, MailjetAskToken, MailjetEmail } from './auth.events.req';
 import { Events } from '@/common/providers/interfaces/events.interface';
 
 @Injectable()
 export class AuthEventEmitter {
-	constructor(@Inject('EventEmitter') private readonly eventEmitter: EventEmitter2) {}
+	constructor(private eventEmitter: EventEmitter2) {}
 
 	async askActivationToken(email: string, token: string) {
 		this.eventEmitter.emit(Events.askActivationToken, new MailjetAskToken(email, token));
