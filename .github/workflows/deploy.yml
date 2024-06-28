@@ -35,4 +35,4 @@ jobs:
           git pull origin main
           npm install
           npm run build
-          pm2 restart your-app-name
+          pm2 restart coacheta-backend
