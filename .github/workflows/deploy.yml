@@ -3,7 +3,7 @@ name: deploy application
 on:
   push:
     branches:
-      - feat/tests
+      - main
 
 jobs:
   test-connection:
