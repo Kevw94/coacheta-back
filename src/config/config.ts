@@ -8,7 +8,6 @@ export const config: EnvConfiguration = {
 		port: process.env.PORT,
 		env: process.env.NODE_ENV,
 		whitelist: JSON.parse(process.env.WHITELIST) || [process.env.WHITELIST],
-		redirect: process.env.FRONT_URL_REDIRECT,
 	},
 	mongo: {
 		uri: process.env.MONGO_URI,

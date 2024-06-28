@@ -5,6 +5,7 @@ import '@/config/env.validator';
 import { AppModule } from '@/app.module';
 import { config } from '@/config/config';
 import { corsOptionsDelegate } from './config/cors';
+import * as cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
@@ -32,7 +33,10 @@ async function bootstrap() {
 
 	app.use(cookieParser());
 
-	app.enableCors(corsOptionsDelegate);
+	// app.enableCors(corsOptionsDelegate);
+	app.use(cors({
+		origin: '*',
+	  }));
 
 	await app.listen(PORT);
 

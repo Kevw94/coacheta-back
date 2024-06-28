@@ -13,7 +13,6 @@ export namespace Configuration {
 		base: string;
 		env: string;
 		whitelist: Array<string>;
-		redirect: string;
 	}
 
 	export interface MongoDB {

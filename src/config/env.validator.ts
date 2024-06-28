@@ -12,7 +12,6 @@ import { EOL } from 'os';
 const envsToCheck = [
 	'PORT',
 	'WHITELIST',
-	'FRONT_URL_REDIRECT',
 	'MONGO_URI',
 	'MONGO_DBNAME',
 	'MAILJET_USER',
