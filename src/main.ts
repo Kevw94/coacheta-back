@@ -5,6 +5,7 @@ import '@/config/env.validator';
 import { AppModule } from '@/app.module';
 import { config } from '@/config/config';
 import { corsOptionsDelegate } from './config/cors';
+import * as cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
@@ -32,7 +33,15 @@ async function bootstrap() {
 
 	app.use(cookieParser());
 
-	app.enableCors(corsOptionsDelegate);
+	// app.enableCors(corsOptionsDelegate);
+	app.use(
+		cors({
+		  origin: 'https://0de8-2a01-e0a-cb1-f610-8461-ba4f-d08d-411f.ngrok-free.app',
+		  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+		  credentials: true,
+		}),
+	  );
+
 
 	await app.listen(PORT);
 
