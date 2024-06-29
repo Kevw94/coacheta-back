@@ -1,6 +1,6 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { TrainingsRepository } from './trainings.repository';
-import { Filter, ObjectId, ReturnDocument } from 'mongodb';
+import { ObjectId, ReturnDocument } from 'mongodb';
 import { Training } from './interfaces/trainings.interface';
 import { Set } from '@/base/sets/interfaces/sets.interface';
 
@@ -16,46 +16,42 @@ export class TrainingsService {
 		return trainings;
 	}
 
-	async getTrainingsByDate(id: ObjectId, startDate: string, endDate?: string) {
-		const start = new Date(startDate);
-		const startOfDay = new Date(start.setHours(0, 0, 0, 0));
+	async getTrainingsByDate(
+		userId: ObjectId,
+		startDate: Date,
+		endDate: Date,
+	): Promise<Training[]> {
+		const query = {
+			creator_id: userId,
+			date: {
+				$gte: new Date(startDate),
+				$lte: new Date(endDate),
+			},
+		};
 
-		if (endDate) {
-			const end = new Date(endDate);
-			const endOfDay = new Date(end.setHours(23, 59, 59, 999));
-			const trainings = await this.trainingsRepository.findMany({
-				_id: id,
-				date: {
-					$gte: startOfDay,
-					$lte: endOfDay,
-				},
-			});
-			return trainings;
-		} else {
-			const endOfDay = new Date(start.setHours(23, 59, 59, 999));
-			const trainings = await this.trainingsRepository.findMany({
-				_id: id,
-				date: {
-					$gte: startOfDay,
-					$lte: endOfDay,
-				},
-			});
-			return trainings;
-		}
+		console.log('query start date param: ', query.date.$gte + typeof query.date.$gte);
+		console.log('query end date param: ', query.date.$lte + typeof query.date.$lte);
+
+		return this.trainingsRepository.findMany(query);
 	}
 
 	async createTraining(training: Training) {
 		const response = await this.trainingsRepository.createTrainings(training);
-		const trainingResponse = await this.trainingsRepository.findOne({_id: new ObjectId(response.insertedId)})
+		const trainingResponse = await this.trainingsRepository.findOne({
+			_id: new ObjectId(response.insertedId),
+		});
 		return trainingResponse;
 	}
 
-
 	async addSetTraining(set: Set) {
-		const query = { _id: new ObjectId(set.training_id) }
-		const update = { $push: {"sets_id": set._id.toString()}}
-		const options = { returnDocument: ReturnDocument.AFTER};
-		const response = await this.trainingsRepository.findOneAndUpdateTrainings(query, update, options);
-		return response
+		const query = { _id: new ObjectId(set.training_id) };
+		const update = { $push: { sets_id: set._id.toString() } };
+		const options = { returnDocument: ReturnDocument.AFTER };
+		const response = await this.trainingsRepository.findOneAndUpdateTrainings(
+			query,
+			update,
+			options,
+		);
+		return response;
 	}
 }

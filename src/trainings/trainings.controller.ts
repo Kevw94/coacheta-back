@@ -4,7 +4,6 @@ import { JwtAuthGuard } from '@/common/guards/auth.guard';
 import { Jwt } from '@/common/decorators/jwt.decorator';
 import { Response } from 'express';
 import { ObjectId } from 'mongodb';
-import { Training } from './interfaces/trainings.interface';
 
 @UseGuards(JwtAuthGuard)
 @Controller('trainings')
@@ -20,14 +19,15 @@ export class TrainingsController {
 	@Get('trainingsByDate')
 	async getTrainingsByDate(
 		@Jwt() userId: ObjectId,
-		@Query('startDate') startDate: string,
-		@Query('endDate') endDate: string,
+		@Query('startDate') startDate: Date,
+		@Query('endDate') endDate: Date,
 		@Res() res: Response,
 	) {
+		console.log('start date: ', startDate + typeof startDate);
+		console.log('end date: ', endDate + typeof startDate);
 		const response = await this.trainingsService.getTrainingsByDate(userId, startDate, endDate);
 		return res.status(200).json({ status: 'ok', trainings: response });
 	}
-
 
 	@Post('')
 	async createTraining(@Jwt() userId: ObjectId, @Res() res: Response, @Body() body: any) {
