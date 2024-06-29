@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsDate, IsDateString, IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsDate, IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { StatusParticipant } from '../interfaces/trainings.interface';
 import { Type } from 'class-transformer';
 
@@ -18,6 +18,11 @@ export class CreateTrainingDTO {
 	@IsString()
 	@IsNotEmpty()
 	session_id: string;
+
+	@ApiProperty({ example: '667e7bc8c70b483750c6540d' })
+	@IsString()
+	@IsNotEmpty()
+	creator_id: string;
 
 	@ApiProperty({ example: '2024-06-29T10:00:00.000Z' })
 	@IsNotEmpty()
@@ -41,4 +46,18 @@ export class CreateTrainingDTO {
 	@ApiProperty({ example: false })
 	@IsNotEmpty()
 	isDone: boolean;
+}
+
+export class GetTrainingsByDateDTO {
+	@ApiProperty({ example: '2024-06-29T10:00:00.000Z' })
+	@IsNotEmpty()
+	@Type(() => Date)
+	@IsDate()
+	startDate: Date;
+
+	@ApiProperty({ example: '2024-06-29T10:00:00.000Z' })
+	@IsNotEmpty()
+	@Type(() => Date)
+	@IsDate()
+	endDate: Date;
 }

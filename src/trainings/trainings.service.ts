@@ -1,6 +1,6 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { TrainingsRepository } from './trainings.repository';
-import { ObjectId, ReturnDocument } from 'mongodb';
+import { Filter, ObjectId, ReturnDocument } from 'mongodb';
 import { Training } from './interfaces/trainings.interface';
 import { Set } from '@/base/sets/interfaces/sets.interface';
 import { CreateTrainingDTO } from './dto/trainings.dto';
@@ -22,18 +22,22 @@ export class TrainingsService {
 		startDate: Date,
 		endDate: Date,
 	): Promise<Training[]> {
-		const query = {
-			creator_id: userId,
+		const start = startDate;
+		const end = endDate;
+
+		const query: Filter<Training> = {
+			creator_id: userId.toHexString(),
 			date: {
-				$gte: new Date(startDate),
-				$lte: new Date(endDate),
+				$gte: start,
+				$lte: end,
 			},
 		};
 
-		console.log('query start date param: ', query.date.$gte + typeof query.date.$gte);
-		console.log('query end date param: ', query.date.$lte + typeof query.date.$lte);
+		console.log('query in service: ', query.dates);
 
-		return this.trainingsRepository.findMany(query);
+		const response = await this.trainingsRepository.findMany(query);
+		console.log('res in training service: ', response);
+		return response;
 	}
 
 	async createTraining(training: CreateTrainingDTO) {

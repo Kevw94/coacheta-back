@@ -41,6 +41,8 @@ export class TrainingsRepository {
 		return this.trainings.findOne(query, options);
 	}
 	async findMany(query: Filter<Training>, options: FindOptions<Training> = undefined) {
+		console.log('query in repo: ', query);
+		console.log('options: ', options);
 		return this.trainings.find(query, options).toArray();
 	}
 	async getAlltrainings() {

@@ -1,4 +1,4 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TrainingsService } from './trainings.service';
 import { TrainingsController } from './trainings.controller';
 import { DatabaseModule } from '@/external-modules/database/mongo.module';
