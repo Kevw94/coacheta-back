@@ -3,6 +3,7 @@ import { TrainingsRepository } from './trainings.repository';
 import { ObjectId, ReturnDocument } from 'mongodb';
 import { Training } from './interfaces/trainings.interface';
 import { Set } from '@/base/sets/interfaces/sets.interface';
+import { CreateTrainingDTO } from './dto/trainings.dto';
 
 @Injectable()
 export class TrainingsService {
@@ -35,7 +36,10 @@ export class TrainingsService {
 		return this.trainingsRepository.findMany(query);
 	}
 
-	async createTraining(training: Training) {
+	async createTraining(training: CreateTrainingDTO) {
+		console.log(
+			'TRAINING DATE IN SERVICE:' + training.date + ' typed as: ' + typeof training.date,
+		);
 		const response = await this.trainingsRepository.createTrainings(training);
 		const trainingResponse = await this.trainingsRepository.findOne({
 			_id: new ObjectId(response.insertedId),
