@@ -37,7 +37,6 @@ export class TrainingsController {
 		@Res() res: Response,
 		@Body() body: CreateTrainingDTO,
 	) {
-		console.log('TRAINING DATE IN CONTROLLER:' + body.date + ' typed as: ' + typeof body.date);
 		const response = await this.trainingsService.createTraining(body);
 		return res.status(200).json({ status: 'ok', training: response });
 	}

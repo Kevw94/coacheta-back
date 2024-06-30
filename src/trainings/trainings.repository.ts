@@ -11,9 +11,6 @@ export class TrainingsRepository {
 	}
 
 	async createTrainings(query: CreateTrainingDTO) {
-		console.log(
-			'TRAINING DATE IN REPOSITORY:' + query.date + ' typed as: ' + typeof query.date,
-		);
 		return this.trainings.insertOne(query);
 	}
 
@@ -41,8 +38,6 @@ export class TrainingsRepository {
 		return this.trainings.findOne(query, options);
 	}
 	async findMany(query: Filter<Training>, options: FindOptions<Training> = undefined) {
-		console.log('query in repo: ', query);
-		console.log('options: ', options);
 		return this.trainings.find(query, options).toArray();
 	}
 	async getAlltrainings() {

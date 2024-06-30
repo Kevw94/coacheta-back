@@ -33,17 +33,12 @@ export class TrainingsService {
 			},
 		};
 
-		console.log('query in service: ', query.dates);
-
 		const response = await this.trainingsRepository.findMany(query);
 		console.log('res in training service: ', response);
 		return response;
 	}
 
 	async createTraining(training: CreateTrainingDTO) {
-		console.log(
-			'TRAINING DATE IN SERVICE:' + training.date + ' typed as: ' + typeof training.date,
-		);
 		const response = await this.trainingsRepository.createTrainings(training);
 		const trainingResponse = await this.trainingsRepository.findOne({
 			_id: new ObjectId(response.insertedId),
