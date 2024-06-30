@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { IsArray, IsDate, IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { StatusParticipant } from '../interfaces/trainings.interface';
 import { Type } from 'class-transformer';
@@ -13,7 +13,7 @@ export class ParticipantDTO {
 	status: StatusParticipant;
 }
 
-export class CreateTrainingDTO {
+export class TrainingDTO {
 	@ApiProperty({ example: '667e7bc8c70b483750c6540d' })
 	@IsString()
 	@IsNotEmpty()
@@ -60,4 +60,9 @@ export class GetTrainingsByDateDTO {
 	@Type(() => Date)
 	@IsDate()
 	endDate: Date;
+}
+
+export class UpdateTrainingDTO extends PartialType(TrainingDTO) {
+	@IsNotEmpty()
+	public _id: string;
 }

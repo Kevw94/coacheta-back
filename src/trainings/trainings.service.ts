@@ -1,9 +1,9 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { TrainingsRepository } from './trainings.repository';
-import { Filter, ObjectId, ReturnDocument } from 'mongodb';
+import { Filter, FindOneAndUpdateOptions, ObjectId, ReturnDocument } from 'mongodb';
 import { Training } from './interfaces/trainings.interface';
 import { Set } from '@/base/sets/interfaces/sets.interface';
-import { CreateTrainingDTO } from './dto/trainings.dto';
+import { TrainingDTO, UpdateTrainingDTO } from './dto/trainings.dto';
 
 @Injectable()
 export class TrainingsService {
@@ -38,7 +38,7 @@ export class TrainingsService {
 		return response;
 	}
 
-	async createTraining(training: CreateTrainingDTO) {
+	async createTraining(training: TrainingDTO) {
 		const response = await this.trainingsRepository.createTrainings(training);
 		const trainingResponse = await this.trainingsRepository.findOne({
 			_id: new ObjectId(response.insertedId),
@@ -46,11 +46,26 @@ export class TrainingsService {
 		return trainingResponse;
 	}
 
+	async updateTraining(training: UpdateTrainingDTO) {
+		const query = { _id: new ObjectId(training._id) };
+		const update = {
+			$set: { ...training, _id: new ObjectId(training._id) },
+		};
+		const options: FindOneAndUpdateOptions = { returnDocument: 'after' };
+
+		const response = await this.trainingsRepository.findOneAndUpdateTraining(
+			query,
+			update,
+			options,
+		);
+		return response;
+	}
+
 	async addSetTraining(set: Set) {
 		const query = { _id: new ObjectId(set.training_id) };
 		const update = { $push: { sets_id: set._id.toString() } };
 		const options = { returnDocument: ReturnDocument.AFTER };
-		const response = await this.trainingsRepository.findOneAndUpdateTrainings(
+		const response = await this.trainingsRepository.findOneAndUpdateTraining(
 			query,
 			update,
 			options,

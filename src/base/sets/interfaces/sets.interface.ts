@@ -8,16 +8,16 @@ export type Set = {
 	targets: SetTargets;
 	results: SetResults | null;
 	isDone: boolean;
-  };
+};
 
-  type SetTargets = {
+type SetTargets = {
 	weight: number;
 	reps: number;
-  };
+};
 
-  type SetResults = {
+type SetResults = {
 	weight: number;
 	reps: number;
 	totalVolume: number;
 	intensity: number;
-  };
+};

@@ -82,7 +82,7 @@ export class SessionsService {
 	}
 
 	async getSessionById(sessionId: string) {
-		const session = await this.sessionsRepository.findOne({_id: new ObjectId(sessionId)})
+		const session = await this.sessionsRepository.findOne({ _id: new ObjectId(sessionId) });
 		return session;
 	}
 }

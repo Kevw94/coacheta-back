@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class SetsDeleteDto {
 	@ApiProperty({

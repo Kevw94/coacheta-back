@@ -1,10 +1,10 @@
-import { Body, Controller, Get, Post, Query, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, Query, Res, UseGuards } from '@nestjs/common';
 import { TrainingsService } from './trainings.service';
 import { JwtAuthGuard } from '@/common/guards/auth.guard';
 import { Jwt } from '@/common/decorators/jwt.decorator';
 import { Response } from 'express';
 import { ObjectId } from 'mongodb';
-import { CreateTrainingDTO, GetTrainingsByDateDTO } from './dto/trainings.dto';
+import { TrainingDTO, GetTrainingsByDateDTO, UpdateTrainingDTO } from './dto/trainings.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('trainings')
@@ -31,12 +31,14 @@ export class TrainingsController {
 		return res.status(200).json({ status: 'ok', trainings: response });
 	}
 
+	@Patch('')
+	async updateTraining(@Body() body: UpdateTrainingDTO, @Res() res: Response) {
+		const response = await this.trainingsService.updateTraining(body);
+		return res.status(200).json({ status: 'ok', training: response });
+	}
+
 	@Post('')
-	async createTraining(
-		@Jwt() userId: ObjectId,
-		@Res() res: Response,
-		@Body() body: CreateTrainingDTO,
-	) {
+	async createTraining(@Jwt() userId: ObjectId, @Res() res: Response, @Body() body: TrainingDTO) {
 		const response = await this.trainingsService.createTraining(body);
 		return res.status(200).json({ status: 'ok', training: response });
 	}
