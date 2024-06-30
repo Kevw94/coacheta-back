@@ -58,6 +58,7 @@ export class TrainingsService {
 			update,
 			options,
 		);
+		console.log('training update response: ', response);
 		return response;
 	}
 

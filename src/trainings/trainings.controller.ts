@@ -23,9 +23,6 @@ export class TrainingsController {
 		@Query() query: GetTrainingsByDateDTO,
 		@Res() res: Response,
 	) {
-		console.log('start date: ', query.startDate + typeof query.startDate);
-		console.log('end date: ', query.endDate + typeof query.startDate);
-
 		const { startDate, endDate } = query;
 		const response = await this.trainingsService.getTrainingsByDate(userId, startDate, endDate);
 		return res.status(200).json({ status: 'ok', trainings: response });
