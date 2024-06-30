@@ -4,7 +4,7 @@ import { JwtAuthGuard } from '@/common/guards/auth.guard';
 import { Jwt } from '@/common/decorators/jwt.decorator';
 import { Response } from 'express';
 import { ObjectId } from 'mongodb';
-import { Training } from './interfaces/trainings.interface';
+import { CreateTrainingDTO, GetTrainingsByDateDTO } from './dto/trainings.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('trainings')
@@ -20,17 +20,23 @@ export class TrainingsController {
 	@Get('trainingsByDate')
 	async getTrainingsByDate(
 		@Jwt() userId: ObjectId,
-		@Query('startDate') startDate: string,
-		@Query('endDate') endDate: string,
+		@Query() query: GetTrainingsByDateDTO,
 		@Res() res: Response,
 	) {
+		console.log('start date: ', query.startDate + typeof query.startDate);
+		console.log('end date: ', query.endDate + typeof query.startDate);
+
+		const { startDate, endDate } = query;
 		const response = await this.trainingsService.getTrainingsByDate(userId, startDate, endDate);
 		return res.status(200).json({ status: 'ok', trainings: response });
 	}
 
-
 	@Post('')
-	async createTraining(@Jwt() userId: ObjectId, @Res() res: Response, @Body() body: any) {
+	async createTraining(
+		@Jwt() userId: ObjectId,
+		@Res() res: Response,
+		@Body() body: CreateTrainingDTO,
+	) {
 		const response = await this.trainingsService.createTraining(body);
 		return res.status(200).json({ status: 'ok', training: response });
 	}
