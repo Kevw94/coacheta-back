@@ -33,15 +33,10 @@ async function bootstrap() {
 
 	app.use(cookieParser());
 
-	// app.enableCors(corsOptionsDelegate);
-	// app.use(
-	// 	cors({
-	// 	  origin: '*',
-	// 	  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-	// 	  credentials: true,
-	// 	}),
-	//   );
-
+	app.enableCors({
+		origin: "http://localhost:8081",
+		credentials: true
+	});
 
 	await app.listen(PORT, '0.0.0.0');
 
