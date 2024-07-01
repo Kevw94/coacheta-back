@@ -6,12 +6,9 @@ import { SetsRepository } from './sets.repository';
 import { TrainingsModule } from '@/trainings/trainings.module';
 
 @Module({
-	imports: [
-		DatabaseModule,
-		forwardRef(() => TrainingsModule),
-	],
+	imports: [DatabaseModule, forwardRef(() => TrainingsModule)],
 	providers: [SetsService, SetsRepository],
 	controllers: [SetsController],
 	exports: [SetsService],
 })
-export class SetsModule { }
+export class SetsModule {}

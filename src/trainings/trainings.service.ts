@@ -26,7 +26,7 @@ export class TrainingsService {
 		const end = endDate;
 
 		const query: Filter<Training> = {
-			creator_id: userId.toHexString(),
+			creator_id: userId,
 			date: {
 				$gte: start,
 				$lte: end,
@@ -49,7 +49,7 @@ export class TrainingsService {
 	async updateTraining(training: UpdateTrainingDTO) {
 		const query = { _id: new ObjectId(training._id) };
 		const update = {
-			$set: { ...training, _id: new ObjectId(training._id) },
+			$set: { ...training, _id: training._id },
 		};
 		const options: FindOneAndUpdateOptions = { returnDocument: 'after' };
 
@@ -64,7 +64,7 @@ export class TrainingsService {
 
 	async addSetTraining(set: Set) {
 		const query = { _id: new ObjectId(set.training_id) };
-		const update = { $push: { sets_id: set._id.toString() } };
+		const update = { $push: { sets_id: set._id } };
 		const options = { returnDocument: ReturnDocument.AFTER };
 		const response = await this.trainingsRepository.findOneAndUpdateTraining(
 			query,

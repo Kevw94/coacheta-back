@@ -4,10 +4,11 @@ import { NestFactory } from '@nestjs/core';
 import '@/config/env.validator';
 import { AppModule } from '@/app.module';
 import { config } from '@/config/config';
-import { corsOptionsDelegate } from './config/cors';
-import * as cors from 'cors';
+// import { corsOptionsDelegate } from './config/cors';
+// import * as cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ObjectIdTransformer } from './common/transformers/ObjectId.transformer';
 
 async function bootstrap() {
 	const PORT = config.app.port;
@@ -21,6 +22,7 @@ async function bootstrap() {
 			whitelist: true,
 			enableDebugMessages: true,
 		}),
+		new ObjectIdTransformer(),
 	);
 	const configSwagger = new DocumentBuilder()
 		.setTitle('Coacheta')

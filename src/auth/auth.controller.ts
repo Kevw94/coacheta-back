@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import {
 	DTOActivationToken,
@@ -37,8 +37,7 @@ export class AuthController {
 	@ApiResponse({ status: 201, description: 'ok' })
 	@ApiBadRequestResponse({ description: 'BAD_REQUEST' })
 	async signUp(@Body() body: DTOAuthSignup, @Res() res: Response) {
-		await this.authService.signup(body).then(
-			async (insertedId) => {
+		await this.authService.signup(body).then(async (insertedId) => {
 			await this.followersService.initFollowers(insertedId);
 			await this.followedService.initFollowed(insertedId);
 		});

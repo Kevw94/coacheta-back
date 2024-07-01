@@ -38,7 +38,7 @@ export class ExercisesController {
 	})
 	@Get('category')
 	async getOneexerciseByCategory(@Query('category') category: BodyPart, @Res() res: Response) {
-		console.log('*******request***********');
+		console.log('coucou, catégorie: ', category);
 		const response = await this.exercisesService.getExerciseByCategory(category);
 		return res.status(200).json({ status: 'ok', exercises: response });
 	}

@@ -1,12 +1,13 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { IsArray, IsDate, IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsDate, IsEnum, IsMongoId, IsNotEmpty } from 'class-validator';
 import { StatusParticipant } from '../interfaces/trainings.interface';
 import { Type } from 'class-transformer';
+import { ObjectId } from 'mongodb';
 
 export class ParticipantDTO {
 	@ApiProperty({ example: '667e7bc8c70b483750c6540f' })
-	@IsString()
-	participant_id: string;
+	@IsMongoId()
+	participant_id: ObjectId;
 
 	@ApiProperty({ enum: StatusParticipant })
 	@IsEnum(StatusParticipant)
@@ -15,14 +16,14 @@ export class ParticipantDTO {
 
 export class TrainingDTO {
 	@ApiProperty({ example: '667e7bc8c70b483750c6540d' })
-	@IsString()
+	@IsMongoId()
 	@IsNotEmpty()
-	session_id: string;
+	session_id: ObjectId;
 
 	@ApiProperty({ example: '667e7bc8c70b483750c6540d' })
-	@IsString()
+	@IsMongoId()
 	@IsNotEmpty()
-	creator_id: string;
+	creator_id: ObjectId;
 
 	@ApiProperty({ example: '2024-06-29T10:00:00.000Z' })
 	@IsNotEmpty()
@@ -35,8 +36,8 @@ export class TrainingDTO {
 		example: ['6648b9f8535f1686ec8218cc', '6648b9f8535f1686ec8218d2'],
 	})
 	@IsArray()
-	@IsString({ each: true })
-	sets_id: string[];
+	@IsMongoId({ each: true })
+	sets_id: ObjectId[];
 
 	@ApiProperty({ type: [ParticipantDTO] })
 	@IsArray()
@@ -63,6 +64,6 @@ export class GetTrainingsByDateDTO {
 }
 
 export class UpdateTrainingDTO extends PartialType(TrainingDTO) {
-	@IsNotEmpty()
-	public _id: string;
+	@IsMongoId()
+	_id: ObjectId;
 }
