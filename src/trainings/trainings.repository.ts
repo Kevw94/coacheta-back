@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
-import { Db, Filter, FindOneAndUpdateOptions, FindOptions, UpdateFilter } from 'mongodb';
+import { Db, Filter, FindOneAndUpdateOptions, FindOptions, ObjectId, UpdateFilter } from 'mongodb';
 import { Training } from './interfaces/trainings.interface';
-import { TrainingDTO } from './dto/trainings.dto';
+import { CreateTrainingDTO } from './dto/trainings.dto';
 
 export class TrainingsRepository {
 	constructor(@Inject('DATABASE_CONNECTION') private db: Db) {}
@@ -10,7 +10,7 @@ export class TrainingsRepository {
 		return this.db.collection<Training>('trainings');
 	}
 
-	async createTrainings(query: TrainingDTO) {
+	async createTrainings(query: CreateTrainingDTO) {
 		return this.trainings.insertOne(query);
 	}
 

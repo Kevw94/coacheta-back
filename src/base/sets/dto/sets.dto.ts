@@ -100,16 +100,6 @@ export class CreateSetDTO {
 	public isDone: boolean;
 }
 
-export class DeleteSetDTO {
-	@ApiProperty({
-		type: ObjectId,
-		//example: "662b5612e742abc24928c348"
-	})
-	@IsMongoId()
-	@IsNotEmpty()
-	public _id: ObjectId;
-}
-
 export class UpdateSetDTO extends PartialType(CreateSetDTO) {
 	@ApiProperty({
 		type: ObjectId,

@@ -2,7 +2,7 @@ import { Jwt } from '@/common/decorators/jwt.decorator';
 import { JwtAuthGuard } from '@/common/guards/auth.guard';
 import { Body, Controller, Delete, Get, Param, Patch, Post, Res, UseGuards } from '@nestjs/common';
 import { ObjectId } from 'mongodb';
-import { DeleteSetDTO, UpdateSetDTO } from './dto/sets.dto';
+import { UpdateSetDTO } from './dto/sets.dto';
 import { Response } from 'express';
 import { SetsService } from './sets.service';
 import { Set } from './interfaces/sets.interface';
@@ -20,9 +20,11 @@ export class SetsController {
 			.json({ status: 'ok', set: response.set, training: response.training });
 	}
 
-	@Delete('')
-	async deleteSet(@Body() body: DeleteSetDTO, @Res() res: Response) {
-		await this.setsService.deleteSet(body);
+	@Delete(':id')
+	async deleteSet(@Param('id') id: ObjectId, @Res() res: Response) {
+		console.log('PASS HERE ', id);
+
+		await this.setsService.deleteSet(id);
 		return res.status(201).json({ status: 'ok' });
 	}
 

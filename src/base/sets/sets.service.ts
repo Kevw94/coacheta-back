@@ -2,7 +2,7 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { SetsRepository } from './sets.repository';
 import { ObjectId } from 'mongodb';
 import { TrainingsService } from '@/trainings/trainings.service';
-import { CreateSetDTO, DeleteSetDTO, UpdateSetDTO } from './dto/sets.dto';
+import { CreateSetDTO, UpdateSetDTO } from './dto/sets.dto';
 
 @Injectable()
 export class SetsService {
@@ -15,7 +15,6 @@ export class SetsService {
 
 	async createSet(body: CreateSetDTO) {
 		const response = await this.setsRepository.createSets(body);
-		const options = { projection: { _id: 1 } };
 		const setReturn = await this.setsRepository.findOne({
 			_id: response.insertedId,
 		});
@@ -25,9 +24,14 @@ export class SetsService {
 		return { set: setReturn, training: trainingUpdate };
 	}
 
-	async deleteSet(body: DeleteSetDTO) {
-		const query = { _id: body };
+	async deleteSet(id: ObjectId) {
+		const query = { _id: id };
 		const response = await this.setsRepository.removeSet(query);
+		console.log('Response Delete', response);
+
+		const responseTraining = await this.trainingsService.deleteSetsInTraining(id);
+		console.log('RESPONSE IN SET', responseTraining);
+
 		return response;
 	}
 

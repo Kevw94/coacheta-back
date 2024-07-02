@@ -14,7 +14,7 @@ export class ParticipantDTO {
 	status: StatusParticipant;
 }
 
-export class TrainingDTO {
+export class CreateTrainingDTO {
 	@ApiProperty({ example: '667e7bc8c70b483750c6540d' })
 	@IsMongoId()
 	@IsNotEmpty()
@@ -63,7 +63,7 @@ export class GetTrainingsByDateDTO {
 	endDate: Date;
 }
 
-export class UpdateTrainingDTO extends PartialType(TrainingDTO) {
+export class UpdateTrainingDTO extends PartialType(CreateTrainingDTO) {
 	@IsMongoId()
 	_id: ObjectId;
 }

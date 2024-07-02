@@ -3,7 +3,7 @@ import { TrainingsRepository } from './trainings.repository';
 import { Filter, FindOneAndUpdateOptions, ObjectId, ReturnDocument } from 'mongodb';
 import { Training } from './interfaces/trainings.interface';
 import { Set } from '@/base/sets/interfaces/sets.interface';
-import { TrainingDTO, UpdateTrainingDTO } from './dto/trainings.dto';
+import { CreateTrainingDTO, UpdateTrainingDTO } from './dto/trainings.dto';
 
 @Injectable()
 export class TrainingsService {
@@ -38,7 +38,7 @@ export class TrainingsService {
 		return response;
 	}
 
-	async createTraining(training: TrainingDTO) {
+	async createTraining(training: CreateTrainingDTO) {
 		const response = await this.trainingsRepository.createTrainings(training);
 		const trainingResponse = await this.trainingsRepository.findOne({
 			_id: new ObjectId(response.insertedId),
@@ -71,6 +71,16 @@ export class TrainingsService {
 			update,
 			options,
 		);
+		return response;
+	}
+
+	async deleteSetsInTraining(setId: ObjectId) {
+		console.log('PASS IN DELETE TRAINING');
+
+		const query = { sets_id: setId };
+		const update = { $pull: { sets_id: setId } };
+		const response = await this.trainingsRepository.updateOneTrainings(query, update);
+		console.log('RESPOSNE DELETE TRAINING', response);
 		return response;
 	}
 }

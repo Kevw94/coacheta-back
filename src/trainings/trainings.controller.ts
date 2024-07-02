@@ -4,7 +4,7 @@ import { JwtAuthGuard } from '@/common/guards/auth.guard';
 import { Jwt } from '@/common/decorators/jwt.decorator';
 import { Response } from 'express';
 import { ObjectId } from 'mongodb';
-import { TrainingDTO, GetTrainingsByDateDTO, UpdateTrainingDTO } from './dto/trainings.dto';
+import { GetTrainingsByDateDTO, UpdateTrainingDTO, CreateTrainingDTO } from './dto/trainings.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('trainings')
@@ -35,7 +35,7 @@ export class TrainingsController {
 	}
 
 	@Post('')
-	async createTraining(@Jwt() userId: ObjectId, @Res() res: Response, @Body() body: TrainingDTO) {
+	async createTraining(@Res() res: Response, @Body() body: CreateTrainingDTO) {
 		const response = await this.trainingsService.createTraining(body);
 		return res.status(200).json({ status: 'ok', training: response });
 	}
