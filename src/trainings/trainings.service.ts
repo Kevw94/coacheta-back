@@ -74,12 +74,17 @@ export class TrainingsService {
 		return response;
 	}
 
-	async deleteSetsInTraining(setId: ObjectId) {
-		console.log('PASS IN DELETE TRAINING');
+	async deleteSetsInTraining(setId: ObjectId, trainingId: ObjectId) {
+		console.log('SET ID: ', setId);
+		const tryFindSet = await this.trainingsRepository.findOne({ _id: trainingId });
+		console.log('TRY FIND SET ', tryFindSet);
 
-		const query = { sets_id: setId };
+		const query = { _id: trainingId };
+		console.log('query: ', query);
 		const update = { $pull: { sets_id: setId } };
-		const response = await this.trainingsRepository.updateOneTrainings(query, update);
+		console.log('update: ', update);
+		const response = await this.trainingsRepository.findOneAndUpdateTraining(query, update);
+
 		console.log('RESPOSNE DELETE TRAINING', response);
 		return response;
 	}

@@ -23,7 +23,9 @@ export class SetsRepository {
 		update: UpdateFilter<Set>,
 		options: FindOneAndUpdateOptions = undefined,
 	) {
-		return this.sets.findOneAndUpdate(query, update, options);
+		const updatedSet = await this.sets.findOneAndUpdate(query, update, options);
+		console.log('updated set: ', updatedSet);
+		return updatedSet;
 	}
 
 	async findOne(query: Filter<Set>, options: FindOptions<Set> = undefined) {

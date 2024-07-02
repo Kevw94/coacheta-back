@@ -26,10 +26,16 @@ export class SetsService {
 
 	async deleteSet(id: ObjectId) {
 		const query = { _id: id };
+		const setBeforeDelete = await this.setsRepository.findOne(query);
+		console.log('SET BEFORE', setBeforeDelete);
+
 		const response = await this.setsRepository.removeSet(query);
 		console.log('Response Delete', response);
 
-		const responseTraining = await this.trainingsService.deleteSetsInTraining(id);
+		const responseTraining = await this.trainingsService.deleteSetsInTraining(
+			id,
+			setBeforeDelete.training_id,
+		);
 		console.log('RESPONSE IN SET', responseTraining);
 
 		return response;

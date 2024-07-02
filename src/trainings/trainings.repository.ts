@@ -18,7 +18,9 @@ export class TrainingsRepository {
 		query: Filter<Training>,
 		update: Partial<Training> | UpdateFilter<Training>,
 	) {
-		return this.trainings.updateOne(query, update);
+		const training = this.trainings.updateOne(query, update);
+		console.log('training updated: ', training);
+		return training;
 	}
 
 	async findOneAndUpdateTraining(
