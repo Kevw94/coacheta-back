@@ -4,11 +4,11 @@ import { NestFactory } from '@nestjs/core';
 import '@/config/env.validator';
 import { AppModule } from '@/app.module';
 import { config } from '@/config/config';
-// import { corsOptionsDelegate } from './config/cors';
-// import * as cors from 'cors';
+import { ObjectIdTransformer } from './common/transformers/ObjectId.transformer';
+import { corsOptionsDelegate } from './config/cors';
 import cookieParser from 'cookie-parser';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ObjectIdTransformer } from './common/transformers/ObjectId.transformer';
+import * as helmet from 'helmet';
 
 async function bootstrap() {
 	const PORT = config.app.port;
@@ -34,6 +34,8 @@ async function bootstrap() {
 	SwaggerModule.setup('api', app, document);
 
 	app.use(cookieParser());
+
+	app.use(helmet.hidePoweredBy());
 
 
 	app.enableCors({
