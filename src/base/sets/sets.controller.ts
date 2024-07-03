@@ -21,13 +21,13 @@ export class SetsController {
 
 	@Delete(':id')
 	async deleteSet(@Param('id') id: ObjectId, @Res() res: Response) {
+		console.log('SET ID TO DELETE: ', id);
 		await this.setsService.deleteSet(id);
 		return res.status(201).json({ status: 'ok' });
 	}
 
 	@Patch('')
-	async patchSets(@Jwt() userId: ObjectId, @Body() body: UpdateSetDTO, @Res() res: Response) {
-		console.log('set to patch in controller: ', body);
+	async patchSets(@Body() body: UpdateSetDTO, @Res() res: Response) {
 		const response = await this.setsService.patchSet(body);
 		return res.status(201).json({ status: 'ok', setUpdate: response });
 	}

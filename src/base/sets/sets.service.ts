@@ -26,35 +26,26 @@ export class SetsService {
 
 	async deleteSet(id: ObjectId) {
 		const query = { _id: id };
-		const setBeforeDelete = await this.setsRepository.findOne(query);
-		console.log('SET BEFORE', setBeforeDelete);
+		const set = await this.setsRepository.findOne(query);
 
-		const response = await this.setsRepository.removeSet(query);
-		console.log('Response Delete', response);
+		console.log('SET TO DELETE: ', set);
 
-		const responseTraining = await this.trainingsService.deleteSetsInTraining(
-			id,
-			setBeforeDelete.training_id,
-		);
-		console.log('RESPONSE IN SET', responseTraining);
+		const deleteSetQuery = await this.setsRepository.removeSet(query);
+		console.log(deleteSetQuery);
 
-		return response;
+		// return await this.trainingsService.deleteSetsInTraining(id, set.training_id);
 	}
 
 	async getSetByTrainingId(userId: ObjectId, trainingId: ObjectId) {
 		const query = { creator_id: userId, training_id: trainingId };
 		const response = await this.setsRepository.findMany(query);
-		console.log('response', response);
 
 		return response;
 	}
 
 	async patchSet(set: UpdateSetDTO) {
-		console.log('set to patch in service: ', set);
-		const query = { _id: new Object(set._id) };
-		const update = { $set: { 'sets.$': set } };
-		const response = await this.setsRepository.findOneAndUpdateSet(query, update);
-		console.log('response', response);
-		return response;
+		const query = { _id: set._id };
+		const update = { $set: set };
+		return await this.setsRepository.findOneAndUpdateSet(query, update);
 	}
 }
