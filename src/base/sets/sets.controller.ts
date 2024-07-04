@@ -28,6 +28,7 @@ export class SetsController {
 
 	@Patch('')
 	async patchSets(@Body() body: UpdateSetDTO, @Res() res: Response) {
+		console.log('set to patch in controller: ', body);
 		const response = await this.setsService.patchSet(body);
 		return res.status(201).json({ status: 'ok', setUpdate: response });
 	}

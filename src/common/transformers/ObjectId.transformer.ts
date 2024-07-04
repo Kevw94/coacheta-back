@@ -24,13 +24,10 @@ export class ObjectIdTransformer implements PipeTransform {
 
 	transform(value: any): any {
 		if (typeof value === 'string') {
-			console.log('value: ', value);
 			if (ObjectId.isValid(value)) {
 				const returnedValue = this.transformToObjectId(value);
-				console.log('returned value: ', returnedValue);
 				return returnedValue;
 			} else {
-				console.log('value returned without change: ', value);
 				return value;
 			}
 		}

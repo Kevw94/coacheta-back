@@ -28,8 +28,6 @@ export class SetsService {
 		const query = { _id: id };
 		const set = await this.setsRepository.findOne(query);
 
-		console.log('SET TO DELETE: ', set);
-
 		const deleteSetQuery = await this.setsRepository.removeSet(query);
 		console.log(deleteSetQuery);
 
@@ -46,6 +44,7 @@ export class SetsService {
 	async patchSet(set: UpdateSetDTO) {
 		const query = { _id: set._id };
 		const update = { $set: set };
+		console.log('set to patch in service: ', set);
 		return await this.setsRepository.findOneAndUpdateSet(query, update);
 	}
 }

@@ -2,12 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Res, UseGuards } fro
 import { ApiBadRequestResponse, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Response } from 'express';
 import { SessionsService } from '@/base/sessions/sessions.service';
-import {
-	CreateSessionDTO,
-	DeleteSessionDTO,
-	GetSessionByIDDTO,
-	UpdateSessionDTO,
-} from '@/base/sessions/dto/sessions.dto';
+import { CreateSessionDTO, UpdateSessionDTO } from '@/base/sessions/dto/sessions.dto';
 import { Jwt } from '@/common/decorators/jwt.decorator';
 import { JwtAuthGuard } from '@/common/guards/auth.guard';
 import { ObjectId } from 'mongodb';
@@ -35,9 +30,7 @@ export class SessionsController {
 	@ApiResponse({ status: 200, description: 'ok' })
 	@ApiBadRequestResponse({ description: 'BAD_REQUEST' })
 	async getSessionById(@Param('sessionId') sessionId: ObjectId, @Res() res: Response) {
-		console.log('session id passed to controller: ', sessionId);
 		const session = await this.sessionsService.getSessionById(sessionId);
-		console.log('session in controller: ', session);
 		return res.status(200).json({ status: 'ok', session: session });
 	}
 
@@ -63,7 +56,6 @@ export class SessionsController {
 	@ApiResponse({ status: 200, description: 'ok' })
 	@ApiBadRequestResponse({ description: 'BAD_REQUEST' })
 	async deleteSession(@Param('id') sessionId: ObjectId) {
-		console.log('log session id: ', sessionId + typeof sessionId);
 		return this.sessionsService.deleteOneSession(sessionId);
 	}
 }
