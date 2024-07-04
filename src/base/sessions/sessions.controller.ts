@@ -2,11 +2,17 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Res, UseGuards } fro
 import { ApiBadRequestResponse, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Response } from 'express';
 import { SessionsService } from '@/base/sessions/sessions.service';
-import { SessionsDto, UpdateSessionDto } from '@/base/sessions/dto/sessions.dto';
+import {
+	CreateSessionDTO,
+	DeleteSessionDTO,
+	GetSessionByIDDTO,
+	UpdateSessionDTO,
+} from '@/base/sessions/dto/sessions.dto';
 import { Jwt } from '@/common/decorators/jwt.decorator';
 import { JwtAuthGuard } from '@/common/guards/auth.guard';
 import { ObjectId } from 'mongodb';
 import { Session } from './interfaces/sessions.interface';
+
 @UseGuards(JwtAuthGuard)
 @Controller('sessions')
 export class SessionsController {
@@ -28,39 +34,36 @@ export class SessionsController {
 	@ApiOperation({ summary: 'Get a session by its id' })
 	@ApiResponse({ status: 200, description: 'ok' })
 	@ApiBadRequestResponse({ description: 'BAD_REQUEST' })
-	async getSessionById(@Jwt() userId: ObjectId,@Param("sessionId") sessionId: string, @Res() res: Response) {
+	async getSessionById(@Param('sessionId') sessionId: ObjectId, @Res() res: Response) {
+		console.log('session id passed to controller: ', sessionId);
 		const session = await this.sessionsService.getSessionById(sessionId);
+		console.log('session in controller: ', session);
 		return res.status(200).json({ status: 'ok', session: session });
 	}
 
-
-
-	@Post('create')
+	@Post('')
 	@ApiOperation({ summary: 'create a session' })
 	@ApiResponse({ status: 201, description: 'ok' })
 	@ApiBadRequestResponse({ description: 'BAD_REQUEST' })
-	async createSession(@Body() body: SessionsDto, @Res() res: Response) {
+	async createSession(@Body() body: CreateSessionDTO, @Res() res: Response) {
 		await this.sessionsService.createNewSession(body);
 		return res.status(201).json({ status: 'ok' });
 	}
 
-	@Patch('update/:id')
+	@Patch('')
 	@ApiOperation({ summary: 'update a session' })
 	@ApiResponse({ status: 200, description: 'ok' })
 	@ApiBadRequestResponse({ description: 'BAD_REQUEST' })
-	async updateSession(
-		@Param('id') id: string,
-		@Body() body: UpdateSessionDto,
-		@Jwt() userId: ObjectId,
-	): Promise<Session> {
-		return this.sessionsService.findOneAndUpdateSession(id, userId, body);
+	async updateSession(@Body() body: UpdateSessionDTO, @Jwt() userId: ObjectId): Promise<Session> {
+		return this.sessionsService.findOneAndUpdateSession(userId, body);
 	}
 
-	@Delete('delete/:id')
+	@Delete(':id')
 	@ApiOperation({ summary: 'delete a session' })
 	@ApiResponse({ status: 200, description: 'ok' })
 	@ApiBadRequestResponse({ description: 'BAD_REQUEST' })
-	async deleteSession(@Param('id') id: string, @Jwt() userId: ObjectId) {
-		return this.sessionsService.deleteOneSession(id, userId);
+	async deleteSession(@Param('id') sessionId: ObjectId) {
+		console.log('log session id: ', sessionId + typeof sessionId);
+		return this.sessionsService.deleteOneSession(sessionId);
 	}
 }

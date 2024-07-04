@@ -2,16 +2,16 @@ import { ObjectId } from 'mongodb';
 
 export interface Training {
 	_id?: ObjectId;
-	creator_id: string;
-	session_id: string;
+	creator_id: ObjectId;
+	session_id: ObjectId;
 	date: Date;
-	sets_id: string[];
+	sets_id: ObjectId[];
 	participants: Participant[];
 	isDone: boolean;
 }
 
 export interface Participant {
-	participant_id: string;
+	participant_id: ObjectId;
 	status: StatusParticipant;
 }
 

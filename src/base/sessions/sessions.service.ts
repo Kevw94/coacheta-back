@@ -1,12 +1,6 @@
-import {
-	BadRequestException,
-	forwardRef,
-	Inject,
-	Injectable,
-	NotFoundException,
-} from '@nestjs/common';
+import { forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { SessionsRepository } from '../sessions/sessions.repository';
-import { SessionsDto, UpdateSessionDto } from '@/base/sessions/dto/sessions.dto';
+import { CreateSessionDTO, UpdateSessionDTO } from '@/base/sessions/dto/sessions.dto';
 import { ObjectId } from 'mongodb';
 import { Session } from './interfaces/sessions.interface';
 
@@ -17,12 +11,12 @@ export class SessionsService {
 		private sessionsRepository: SessionsRepository,
 	) {}
 
-	createNewSession(session: SessionsDto) {
+	createNewSession(session: CreateSessionDTO) {
 		const { creator_id } = session;
 
 		const newSession = {
 			...session,
-			creator_id: new ObjectId(creator_id),
+			creator_id: creator_id,
 		};
 
 		return this.sessionsRepository.createSession(newSession);
@@ -34,18 +28,9 @@ export class SessionsService {
 		});
 	}
 
-	async findOneAndUpdateSession(
-		id: string,
-		userId: ObjectId,
-		body: UpdateSessionDto,
-	): Promise<Session> {
-		const formattedId = new ObjectId(id);
-		const updatedBody = {
-			...body,
-			creator_id: new ObjectId(body.creator_id),
-		};
+	async findOneAndUpdateSession(userId: ObjectId, body: UpdateSessionDTO): Promise<Session> {
 		const session = await this.sessionsRepository.findOne({
-			_id: formattedId,
+			_id: body._id,
 			creator_id: userId,
 		});
 		if (!session) {
@@ -53,27 +38,16 @@ export class SessionsService {
 		}
 
 		await this.sessionsRepository.updateOneSession(
-			{ _id: formattedId, creator_id: userId },
-			{ $set: updatedBody },
+			{ _id: body._id, creator_id: userId },
+			{ $set: body },
 		);
 
-		const updatedSession = this.sessionsRepository.findOne({ _id: formattedId });
-		console.log('updated session: ', updatedSession);
+		const updatedSession = this.sessionsRepository.findOne({ _id: body._id });
 		return updatedSession;
 	}
 
-	async deleteOneSession(sessionId: string, userId: ObjectId) {
-		const formattedSessionId = new ObjectId(sessionId);
-		const session = await this.sessionsRepository.findOne({
-			_id: formattedSessionId,
-			creator_id: userId,
-		});
-
-		if (session.creator_id.equals(userId)) {
-			return this.sessionsRepository.deleteSessionById(formattedSessionId);
-		} else {
-			throw new BadRequestException(`Session ${sessionId} cannot be deleted!`);
-		}
+	async deleteOneSession(sessionId: ObjectId) {
+		return this.sessionsRepository.deleteSessionById(sessionId);
 	}
 
 	async getSessions(userId: ObjectId) {
@@ -81,8 +55,8 @@ export class SessionsService {
 		return sessions;
 	}
 
-	async getSessionById(sessionId: string) {
-		const session = await this.sessionsRepository.findOne({_id: new ObjectId(sessionId)})
+	async getSessionById(sessionId: ObjectId) {
+		const session = await this.sessionsRepository.findOne({ _id: sessionId });
 		return session;
 	}
 }

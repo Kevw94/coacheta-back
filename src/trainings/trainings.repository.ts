@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { Db, Filter, FindOneAndUpdateOptions, FindOptions, UpdateFilter } from 'mongodb';
+import { Db, Filter, FindOneAndUpdateOptions, FindOptions, ObjectId, UpdateFilter } from 'mongodb';
 import { Training } from './interfaces/trainings.interface';
 import { CreateTrainingDTO } from './dto/trainings.dto';
 
@@ -18,10 +18,12 @@ export class TrainingsRepository {
 		query: Filter<Training>,
 		update: Partial<Training> | UpdateFilter<Training>,
 	) {
-		return this.trainings.updateOne(query, update);
+		const training = this.trainings.updateOne(query, update);
+		console.log('training updated: ', training);
+		return training;
 	}
 
-	async findOneAndUpdateTrainings(
+	async findOneAndUpdateTraining(
 		query: Filter<Training>,
 		update: UpdateFilter<Training>,
 		options: FindOneAndUpdateOptions = undefined,

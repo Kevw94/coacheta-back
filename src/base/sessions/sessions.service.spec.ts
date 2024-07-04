@@ -6,19 +6,18 @@ import { SessionsRepository } from '../sessions/sessions.repository';
 describe('SessionsService', () => {
 	let service: SessionsService;
 	const userId: ObjectId = new ObjectId('6629786312ccdffe8421f7aa');
-	const mongoUri: string = 'mongodb://coacheta:DcJNqtUdVrHohANR63KqnSmcSHkBcQ@51.91.101.108:27017/coacheta';
+	const mongoUri: string =
+		'mongodb://coacheta:DcJNqtUdVrHohANR63KqnSmcSHkBcQ@51.91.101.108:27017/coacheta';
 	const mongoDbName: string = 'coacheta';
 
 	beforeEach(async () => {
-
 		const module: TestingModule = await Test.createTestingModule({
 			providers: [
 				SessionsService,
 				{
 					provide: 'DATABASE_CONNECTION',
 					useFactory: async (): Promise<Db> => {
-						const client = await MongoClient.connect(mongoUri, {
-						});
+						const client = await MongoClient.connect(mongoUri, {});
 
 						return client.db(mongoDbName);
 					},

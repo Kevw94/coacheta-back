@@ -14,19 +14,16 @@ export class SetsRepository {
 		return this.sets.insertOne(query);
 	}
 
-	async updateOneSets(
-		query: Filter<Set>,
-		update: Partial<Set> | UpdateFilter<Set>,
-	) {
+	async updateOneSets(query: Filter<Set>, update: Partial<Set> | UpdateFilter<Set>) {
 		return this.sets.updateOne(query, update);
 	}
 
-	async findOneAndUpdateSets(
+	async findOneAndUpdateSet(
 		query: Filter<Set>,
 		update: UpdateFilter<Set>,
 		options: FindOneAndUpdateOptions = undefined,
 	) {
-		return this.sets.findOneAndUpdate(query, update, options);
+		return await this.sets.findOneAndUpdate(query, update, options);
 	}
 
 	async findOne(query: Filter<Set>, options: FindOptions<Set> = undefined) {
@@ -46,6 +43,5 @@ export class SetsRepository {
 
 	async removeSet(query: Filter<Set>) {
 		return this.sets.deleteOne(query);
-
 	}
 }
