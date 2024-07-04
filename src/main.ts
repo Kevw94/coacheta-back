@@ -35,16 +35,13 @@ async function bootstrap() {
 
 	app.use(cookieParser());
 
-	// app.enableCors(corsOptionsDelegate);
-	// app.use(
-	// 	cors({
-	// 		origin: 'https://0de8-2a01-e0a-cb1-f610-8461-ba4f-d08d-411f.ngrok-free.app',
-	// 		methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-	// 		credentials: true,
-	// 	}),
-	// );
 
-	await app.listen(PORT);
+	app.enableCors({
+		origin: "http://localhost:8081",
+		credentials: true
+	});
+
+	await app.listen(PORT, '0.0.0.0');
 
 	return app.getUrl();
 }
