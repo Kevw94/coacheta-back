@@ -1,81 +1,78 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Coacheta-API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Documentation
-
-[Documentation](http://localhost:8010/api) framework TypeScript starter repository.
+## Table des matières
 
 
-## Installation
-```bash
-docker compose up -d
-```
+- [Description du Projet](#description-du-projet)
+- [Prérequis](#prérequis)
+- [Installation](#installation)
+- [Contributeurs](#contributeurs)
+- [Licence](#licence)
 
-```bash
-$ npm install
-```
+### Description du Projet
 
-## Running the app
+** Coacheta-API est l'API de l'application Coacheta, ici nous aurons les routes qui vont permettre de communiquer avec l'application et ainsi réaliser des opérations entre une action utilisateur et l'enregistrement de ses données.**
 
-```bash
-# development
-$ npm run start
+### Prérequis
+- node
+- npm
+- yarn
+- Docker
 
-# watch mode
-$ npm run start:dev
+### Installation
 
-# production mode
-$ npm run start:prod
-```
+1. Clonez le repository Back :
+   ```sh
+   git clone https://github.com/Kevw94/coacheta-back.git
+   cd coacheta-back
+   npm install```
 
-## Test
+2. lancer la base de données MongoDB avec docker :
+	```bash
+	docker compose up -d
+	```
 
-```bash
-# unit tests
-$ npm run test
+3. Se créer un compte MailJet
 
-# e2e tests
-$ npm run test:e2e
+4. Créez un fichier .env:
+Nous avons un .env.example comme exemple
+Mettre ce .env
+	```bash
+	PORT=8010
+	BASE_URL="http://localhost:8010"
+	WHITELIST=["http://localhost:8081","http://127.0.0.1:8081","http://localhost:8081","*"]
 
-# test coverage
-$ npm run test:cov
-```
 
-## Support
+	## MONGO SETTINGS
+	MONGO_URI="mongodb://localhost:27090/"
+	MONGO_DBNAME="coacheta"
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+	## JWT AUTH SETTINGS
+	JWT_SECRET="ZzrfvzMalriT17o6cQtr4747JzBnPUOxhnXu70sv"
+	COOKIE_SECURE=false
+	COOKIE_SAMESITE=false
 
-## Stay in touch
+	# MAILJET
+	# mettre son compte Mailjet
+	MAILJET_USER=
+	MAILJET_PASS=
+	MAILJET_NOREPLY="coacheta@gmail.com"
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+	```
 
-## License
+5. Lancez le back:
+	```sh
+	npm run dev
+	```
 
-Nest is [MIT licensed](LICENSE).
+
+
+### Contributeurs
+- Kevin Pinero
+- Guilhem Clarisse
+- Mohamed Niaissa
+- Stéphanie Boisne-Garnier
+
+### Licence
+Ce projet est sous licence MIT - [MIT licensed](LICENSE).
+
